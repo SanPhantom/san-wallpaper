@@ -1,44 +1,35 @@
-import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  IconButton,
+  useTheme,
+} from "@mui/material";
 import {
   Search,
   SearchIconWrapper,
   StyledInputBase,
 } from "../components/Search";
-import { Search as SearchIcon } from "@mui/icons-material";
-import {
-  useSetState,
-  useCreation,
-  useBoolean,
-  useMemoizedFn,
-  useInfiniteScroll,
-} from "ahooks";
+import { Search as SearchIcon, Settings } from "@mui/icons-material";
+import { useSetState, useInfiniteScroll } from "ahooks";
 import { search } from "../services/paper";
 import { useRef } from "react";
-import ImgList from "../components/ImgList";
+import Waterfall from "../components/Waterfall";
 
 const Home = () => {
+  const theme = useTheme();
   const [state, setState] = useSetState({
     search: "",
-    imgList: [] as any[],
   });
-  const [loading, { setTrue: openLoading, setFalse: closeLoading }] =
-    useBoolean(false);
   const targetRef = useRef();
 
-  const queryPhotos = useMemoizedFn(async () => {
-    openLoading();
-    const { data } = await search({ page: 1 });
-    setState({
-      imgList: data,
-    });
-    closeLoading();
-  });
-
-  const { data } = useInfiniteScroll(
+  const { data, loading, reload } = useInfiniteScroll(
     (preData: any) => {
       return new Promise<any>((resolve) => {
         search({
           page: (preData?.meta.current_page ?? 0) + 1,
+          q: state.search,
         }).then((res: any) => {
           resolve({
             list: res.data,
@@ -50,15 +41,24 @@ const Home = () => {
     {
       target: targetRef,
       reloadDeps: [],
+      threshold: 200,
+      isNoMore(data) {
+        return (data?.meta.current_page ?? 0) >= (data?.meta.last_page ?? -1);
+      },
     }
   );
 
-  // useCreation(() => {
-  //   queryPhotos();
-  // }, []);
-
   return (
-    <Box ref={targetRef} sx={{ px: 2, height: "100%", overflow: "auto" }}>
+    <Box
+      ref={targetRef}
+      sx={{
+        pt: 10,
+        px: 2,
+        height: "100%",
+        overflow: "auto",
+        boxSizing: "border-box",
+      }}
+    >
       <AppBar position="fixed" color="primary">
         <Toolbar>
           <Typography
@@ -78,11 +78,23 @@ const Home = () => {
               inputProps={{ "aria-label": "search" }}
               value={state.search}
               onChange={(v) => setState({ search: v.target.value })}
+              onKeyUp={(e) => {
+                if (e.keyCode === 13) {
+                  reload();
+                }
+              }}
             />
           </Search>
+          <IconButton sx={{ ml: 1 }}>
+            <Settings htmlColor={theme.palette.common.white} />
+          </IconButton>
         </Toolbar>
       </AppBar>
-      <ImgList list={data?.list ?? []} loading={loading} />
+      <Waterfall
+        list={data?.list ?? []}
+        cols={{ xs: 2, sm: 4, lg: 6 }}
+        spacing={2}
+      />
     </Box>
   );
 };

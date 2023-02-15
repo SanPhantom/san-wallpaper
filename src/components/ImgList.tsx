@@ -2,7 +2,6 @@ import React from "react";
 import { useCreation, useBoolean, useMount } from "ahooks";
 import { Masonry } from "@mui/lab";
 import { Box, Paper, styled } from "@mui/material";
-import Waterfall from "charge-waterfall";
 import "./waterfall.less";
 
 interface IImgListProps {
@@ -23,7 +22,7 @@ const Label = styled(Paper)(({ theme }) => ({
 const ImgList = ({ list, loading }: IImgListProps) => {
   return (
     <Box sx={{ pt: 10, boxSizing: "border-box" }}>
-      <Masonry columns={6}>
+      <Masonry columns={5}>
         {list.map((item, index) => (
           <div className="img-card" key={item.id}>
             <Label>{index + 1}</Label>

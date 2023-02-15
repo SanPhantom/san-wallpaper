@@ -11,7 +11,6 @@ specifiers:
   '@vitejs/plugin-react': ^3.1.0
   ahooks: ^3.7.4
   axios: ^1.3.3
-  charge-waterfall: ^0.2.0
   less: ^4.1.3
   less-loader: ^11.1.0
   react: ^18.2.0
@@ -27,7 +26,6 @@ dependencies:
   '@mui/material': 5.11.9_acl7mc3llczqccvmbrsweq6vga
   ahooks: 3.7.4_react@18.2.0
   axios: 1.3.3
-  charge-waterfall: 0.2.0
   less: 4.1.3
   less-loader: 11.1.0_less@4.1.3
   react: 18.2.0
@@ -986,12 +984,6 @@ packages:
       escape-string-regexp: 1.0.5
       supports-color: 5.5.0
 
-  /charge-waterfall/0.2.0:
-    resolution: {integrity: sha512-20S+S/gA/Z6Bx5o6lXxjs6TcC5I2soQXfUcy6YgPTM4g4rSBSrKgowF/oACW8DiZVc7MR78Hiu8xZBeaLNKJVQ==}
-    dependencies:
-      deepmerge: 4.3.0
-    dev: false
-
   /clsx/1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
@@ -1060,11 +1052,6 @@ packages:
     dependencies:
       ms: 2.1.2
     dev: true
-
-  /deepmerge/4.3.0:
-    resolution: {integrity: sha512-z2wJZXrmeHdvYJp/Ux55wIjqo81G5Bp4c+oELTW+7ar6SogWHajt5a9gO3s3IDaGSAXjDk0vlQKN3rms8ab3og==}
-    engines: {node: '>=0.10.0'}
-    dev: false
 
   /delayed-stream/1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
