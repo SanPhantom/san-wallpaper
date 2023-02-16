@@ -5,6 +5,7 @@ import {
   Box,
   IconButton,
   useTheme,
+  CssBaseline,
 } from "@mui/material";
 import {
   Search,
@@ -12,16 +13,20 @@ import {
   StyledInputBase,
 } from "../components/Search";
 import { Search as SearchIcon, Settings } from "@mui/icons-material";
-import { useSetState, useInfiniteScroll } from "ahooks";
+import { useSetState, useInfiniteScroll, useBoolean } from "ahooks";
 import { search } from "../services/paper";
 import { useRef } from "react";
 import Waterfall from "../components/Waterfall";
+import ImgFullDrawer from "../components/ImgFullDrawer";
 
 const Home = () => {
   const theme = useTheme();
   const [state, setState] = useSetState({
     search: "",
+    selectItem: undefined as any,
   });
+  const [showDrawer, { setTrue: openDrawer, setFalse: closeDrawer }] =
+    useBoolean(false);
   const targetRef = useRef();
 
   const { data, loading, reload } = useInfiniteScroll(
@@ -49,16 +54,8 @@ const Home = () => {
   );
 
   return (
-    <Box
-      ref={targetRef}
-      sx={{
-        pt: 10,
-        px: 2,
-        height: "100%",
-        overflow: "auto",
-        boxSizing: "border-box",
-      }}
-    >
+    <Box sx={{ height: "100%", display: "flex" }}>
+      <CssBaseline />
       <AppBar position="fixed" color="primary">
         <Toolbar>
           <Typography
@@ -90,10 +87,29 @@ const Home = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Waterfall
-        list={data?.list ?? []}
-        cols={{ xs: 2, sm: 4, lg: 6 }}
-        spacing={2}
+
+      <Box
+        ref={targetRef}
+        component="main"
+        sx={{ flexGrow: 1, p: 2, overflow: "auto" }}
+      >
+        <Toolbar />
+        <Waterfall
+          list={data?.list ?? []}
+          cols={{ xs: 3, sm: 4, md: 6, lg: 8, xl: 12 }}
+          spacing={2}
+          onItemShow={(item) => {
+            setState({
+              selectItem: item,
+            });
+            openDrawer();
+          }}
+        />
+      </Box>
+      <ImgFullDrawer
+        open={showDrawer}
+        item={state.selectItem}
+        onClose={closeDrawer}
       />
     </Box>
   );

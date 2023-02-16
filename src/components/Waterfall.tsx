@@ -3,14 +3,21 @@ import { useMemoizedFn, useCreation, useSetState, useSize } from "ahooks";
 import "./waterfall.less";
 import { Box, Breakpoint, Grid } from "@mui/material";
 import useGridCol from "../hooks/useGridCol";
+import ImgCard from "./ImgCard";
 
 interface IWaterfallProps {
   list: any[];
   cols: number | { [key in Breakpoint]?: number };
   spacing?: number;
+  onItemShow?: (item: any) => void;
 }
 
-const Waterfall = ({ list, cols, spacing = 8 }: IWaterfallProps) => {
+const Waterfall = ({
+  list,
+  cols,
+  spacing = 8,
+  onItemShow,
+}: IWaterfallProps) => {
   const waterfallRef = useRef<HTMLDivElement>(null);
   const size = useSize(waterfallRef);
   const col = useGridCol(cols);
@@ -101,27 +108,13 @@ const Waterfall = ({ list, cols, spacing = 8 }: IWaterfallProps) => {
           style={{ width: state.colWidth + "px" }}
         >
           {colItem?.map((item: any, idx: number) => (
-            <Box
-              className="waterfall-item"
+            <ImgCard
               key={"flow_" + colIdx + "_item_" + idx + "_" + item.displayHeight}
-              style={{
-                height: item.displayHeight,
-                marginTop: idx === 0 ? 0 : spacing * 8,
-              }}
-              title={item.text || ""}
-            >
-              <img
-                loading="lazy"
-                src={item.thumbs.original}
-                className="waterfall-img"
-                style={{
-                  borderBottomLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  display: "block",
-                  width: "100%",
-                }}
-              />
-            </Box>
+              item={item}
+              idx={idx}
+              spacing={spacing}
+              onShow={() => onItemShow?.(item)}
+            />
           ))}
         </Grid>
       ))}
