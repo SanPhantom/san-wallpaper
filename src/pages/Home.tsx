@@ -6,13 +6,21 @@ import {
   IconButton,
   useTheme,
   CssBaseline,
+  Tooltip,
+  Fab,
+  Fade,
+  Stack,
 } from "@mui/material";
 import {
   Search,
   SearchIconWrapper,
   StyledInputBase,
 } from "../components/Search";
-import { Search as SearchIcon, Settings } from "@mui/icons-material";
+import {
+  ExpandLess,
+  Search as SearchIcon,
+  Settings,
+} from "@mui/icons-material";
 import { useSetState, useInfiniteScroll, useBoolean } from "ahooks";
 import { search } from "../services/paper";
 import { useRef } from "react";
@@ -27,7 +35,11 @@ const Home = () => {
   });
   const [showDrawer, { setTrue: openDrawer, setFalse: closeDrawer }] =
     useBoolean(false);
-  const targetRef = useRef();
+  const [
+    showScrollTop,
+    { setTrue: openShowScrollTop, setFalse: closeShowScrollTop },
+  ] = useBoolean(false);
+  const targetRef = useRef<HTMLDivElement>(null);
 
   const { data, loading, reload } = useInfiniteScroll(
     (preData: any) => {
@@ -54,7 +66,7 @@ const Home = () => {
   );
 
   return (
-    <Box sx={{ height: "100%", display: "flex" }}>
+    <Stack sx={{ height: "100%" }}>
       <CssBaseline />
       <AppBar position="fixed" color="primary">
         <Toolbar>
@@ -88,30 +100,53 @@ const Home = () => {
         </Toolbar>
       </AppBar>
 
-      <Box
-        ref={targetRef}
-        component="main"
-        sx={{ flexGrow: 1, p: 2, overflow: "auto" }}
-      >
+      <Stack component="main" sx={{ flexGrow: 1, width: "100%", minHeight: 1 }}>
         <Toolbar />
-        <Waterfall
-          list={data?.list ?? []}
-          cols={{ xs: 3, sm: 4, md: 6, lg: 8, xl: 12 }}
-          spacing={2}
-          onItemShow={(item) => {
-            setState({
-              selectItem: item,
-            });
-            openDrawer();
+        <Box
+          ref={targetRef}
+          sx={{ flexGrow: 1, p: 2, overflow: "auto" }}
+          onScroll={(e) => {
+            if ((e.target as HTMLElement).scrollTop >= 200) {
+              openShowScrollTop();
+            } else {
+              closeShowScrollTop();
+            }
           }}
-        />
-      </Box>
+        >
+          <Waterfall
+            list={data?.list ?? []}
+            cols={{ xs: 2, sm: 4, md: 6, lg: 8, xl: 8 }}
+            spacing={2}
+            onItemShow={(item) => {
+              setState({
+                selectItem: item,
+              });
+              openDrawer();
+            }}
+          />
+        </Box>
+      </Stack>
+      <Fade in={showScrollTop}>
+        <Tooltip title="滚动到顶部">
+          <Fab
+            size="small"
+            color="primary"
+            sx={{ position: "fixed", bottom: 32, right: 32 }}
+            onClick={() => {
+              targetRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <ExpandLess />
+          </Fab>
+        </Tooltip>
+      </Fade>
+
       <ImgFullDrawer
         open={showDrawer}
         item={state.selectItem}
         onClose={closeDrawer}
       />
-    </Box>
+    </Stack>
   );
 };
 

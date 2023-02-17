@@ -42,14 +42,17 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           >
             <Close />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            San Wallpaper
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            >
+              San Wallpaper
+            </Typography>
+          </Box>
+
           <Tooltip title="下载原图">
             <IconButton
               edge="start"
@@ -62,7 +65,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      <Stack sx={{ width: "100%", minHeight: 0 }}>
+      <Stack sx={{ width: "100%", minHeight: 0, flex: 1 }}>
         <Toolbar />
         <Stack
           direction={"row"}
@@ -76,7 +79,6 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
               loading="lazy"
               src={item?.path}
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
-              crossOrigin="anonymous"
             />
           </Box>
         </Stack>
