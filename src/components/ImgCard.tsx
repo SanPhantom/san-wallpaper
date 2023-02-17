@@ -71,8 +71,9 @@ const ImgCard = ({ item, idx, spacing, onShow }: IImgCardProps) => {
 
       <img
         loading="lazy"
-        src={item.thumbs.original}
+        src={item.src}
         className="waterfall-img"
+        alt="加载失败"
         style={{
           borderRadius: 4,
           display: "block",

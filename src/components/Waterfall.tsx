@@ -49,29 +49,10 @@ const Waterfall = ({
       return minIndex;
     };
 
-    const getImageRect = async (item: any) => {
-      return new Promise<{ w: number; h: number }>((resolve) => {
-        const img = new Image();
-        img.src = item.thumbs.original;
-        // img.setAttribute("crossorigin", "anonymous");
-
-        img.onload = (e) => {
-          let w = Number(img.width);
-          let h = Number(img.height);
-          resolve({ w, h });
-        };
-      });
-    };
-
-    const lsWH = await Promise.all(
-      ls.map((item: any) => {
-        return getImageRect(item);
-      })
-    );
-
     ls.forEach((item: any, idx: any) => {
       const index = getIndexOfMinHeightFlow();
-      item.displayHeight = (lsWH[idx].h * state.colWidth) / lsWH[idx].w;
+      item.displayHeight =
+        (item.dimension_y * state.colWidth) / item.dimension_x;
       arr[index].push(item);
       heightArr[index] += item.displayHeight;
     });

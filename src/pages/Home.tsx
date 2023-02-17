@@ -21,11 +21,13 @@ import {
   Search as SearchIcon,
   Settings,
 } from "@mui/icons-material";
-import { useSetState, useInfiniteScroll, useBoolean } from "ahooks";
+import { useSetState, useInfiniteScroll, useBoolean, useMount } from "ahooks";
 import { search } from "../services/paper";
 import { useRef } from "react";
 import Waterfall from "../components/Waterfall";
 import ImgFullDrawer from "../components/ImgFullDrawer";
+import { MasonryInfiniteGrid } from "@egjs/react-infinitegrid";
+import ImgCard from "../components/ImgCard";
 
 const Home = () => {
   const theme = useTheme();
@@ -41,26 +43,30 @@ const Home = () => {
   ] = useBoolean(false);
   const targetRef = useRef<HTMLDivElement>(null);
 
-  const { data, loading, reload } = useInfiniteScroll(
+  const { data, loading, reload, loadMore } = useInfiniteScroll(
     (preData: any) => {
-      return new Promise<any>((resolve) => {
-        search({
+      return new Promise<any>(async (resolve) => {
+        const { data, ...res } = await search({
           page: (preData?.meta.current_page ?? 0) + 1,
           q: state.search,
-        }).then((res: any) => {
-          resolve({
-            list: res.data,
-            meta: res.meta,
-          });
+        });
+        resolve({
+          list: data.map((item: any) => ({
+            ...item,
+            src: item.thumbs.original,
+          })),
+          meta: (res as any).meta!,
         });
       });
     },
     {
       target: targetRef,
       reloadDeps: [],
-      threshold: 200,
       isNoMore(data) {
         return (data?.meta.current_page ?? 0) >= (data?.meta.last_page ?? -1);
+      },
+      onError: (error) => {
+        console.log({ error });
       },
     }
   );
@@ -106,7 +112,7 @@ const Home = () => {
           ref={targetRef}
           sx={{ flexGrow: 1, p: 2, overflow: "auto" }}
           onScroll={(e) => {
-            if ((e.target as HTMLElement).scrollTop >= 200) {
+            if ((e.target as HTMLElement).scrollTop !== 0) {
               openShowScrollTop();
             } else {
               closeShowScrollTop();
@@ -115,7 +121,7 @@ const Home = () => {
         >
           <Waterfall
             list={data?.list ?? []}
-            cols={{ xs: 2, sm: 4, md: 6, lg: 8, xl: 8 }}
+            cols={{ xs: 2, sm: 4, lg: 5 }}
             spacing={2}
             onItemShow={(item) => {
               setState({
@@ -124,22 +130,22 @@ const Home = () => {
               openDrawer();
             }}
           />
+          {showScrollTop && (
+            <Tooltip title="滚动到顶部">
+              <Fab
+                size="small"
+                color="primary"
+                sx={{ position: "fixed", bottom: 32, right: 32 }}
+                onClick={() => {
+                  targetRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                <ExpandLess />
+              </Fab>
+            </Tooltip>
+          )}
         </Box>
       </Stack>
-      <Fade in={showScrollTop}>
-        <Tooltip title="滚动到顶部">
-          <Fab
-            size="small"
-            color="primary"
-            sx={{ position: "fixed", bottom: 32, right: 32 }}
-            onClick={() => {
-              targetRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
-            <ExpandLess />
-          </Fab>
-        </Tooltip>
-      </Fade>
 
       <ImgFullDrawer
         open={showDrawer}
