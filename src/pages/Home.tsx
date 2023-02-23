@@ -10,6 +10,8 @@ import {
   Fab,
   Fade,
   Stack,
+  Divider,
+  Link,
 } from "@mui/material";
 import {
   Search,
@@ -21,13 +23,11 @@ import {
   Search as SearchIcon,
   Settings,
 } from "@mui/icons-material";
-import { useSetState, useInfiniteScroll, useBoolean, useMount } from "ahooks";
+import { useSetState, useInfiniteScroll, useBoolean } from "ahooks";
 import { search } from "../services/paper";
 import { useRef } from "react";
 import Waterfall from "../components/Waterfall";
 import ImgFullDrawer from "../components/ImgFullDrawer";
-import { MasonryInfiniteGrid } from "@egjs/react-infinitegrid";
-import ImgCard from "../components/ImgCard";
 
 const Home = () => {
   const theme = useTheme();
@@ -121,7 +121,7 @@ const Home = () => {
         >
           <Waterfall
             list={data?.list ?? []}
-            cols={{ xs: 2, sm: 4, lg: 5 }}
+            cols={{ xs: 2, sm: 4, lg: 5, xl: 8 }}
             spacing={2}
             onItemShow={(item) => {
               setState({
@@ -145,6 +145,17 @@ const Home = () => {
             </Tooltip>
           )}
         </Box>
+        <Stack alignItems={"center"}>
+          <Divider sx={{ width: "100%" }} />
+          <Stack alignItems={"center"} spacing={1} sx={{ py: 2 }}>
+            <Typography fontSize={14}>
+              数据来源: <Link href="https://wallhaven.cc/">wall haven</Link>{" "}
+            </Typography>
+            <Typography fontSize={14}>
+              &copy;Copyright 2021-2022 by SanPhantom, All Rights Reserved.
+            </Typography>
+          </Stack>
+        </Stack>
       </Stack>
 
       <ImgFullDrawer

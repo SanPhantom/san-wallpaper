@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useMemoizedFn, useCreation, useSetState, useSize } from "ahooks";
 import "./waterfall.less";
-import { Box, Breakpoint, Grid } from "@mui/material";
+import { Breakpoint, Grid } from "@mui/material";
 import useGridCol from "../hooks/useGridCol";
 import ImgCard from "./ImgCard";
 
