@@ -1,22 +1,15 @@
-import {
-  Collections,
-  Star,
-  StarOutline,
-  Visibility,
-} from "@mui/icons-material";
+import { Star, Visibility } from "@mui/icons-material";
 import {
   alpha,
   Box,
   Fade,
   IconButton,
-  Link,
   Slide,
   Stack,
   Typography,
 } from "@mui/material";
 import { useBoolean } from "ahooks";
 import React, { useRef } from "react";
-import ImgFullDrawer from "./ImgFullDrawer";
 
 interface IImgCardProps {
   item: any;
@@ -37,7 +30,6 @@ const ImgCard = ({ item, idx, spacing, onShow }: IImgCardProps) => {
       onMouseLeave={closeShow}
       onBlur={closeShow}
       sx={{
-        h: item.displayHeight,
         mt: idx === 0 ? 0 : spacing,
         borderRadius: (theme) => theme.spacing(0.5),
         boxShadow: (theme) => theme.shadows[2],
@@ -78,6 +70,7 @@ const ImgCard = ({ item, idx, spacing, onShow }: IImgCardProps) => {
           borderRadius: 4,
           display: "block",
           width: "100%",
+          fontSize: 0,
         }}
       />
       <Slide direction="up" in={show} container={containerRef.current}>

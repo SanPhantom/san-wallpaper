@@ -28,6 +28,7 @@ import { search } from "../services/paper";
 import { useRef } from "react";
 import Waterfall from "../components/Waterfall";
 import ImgFullDrawer from "../components/ImgFullDrawer";
+import { FixedSizeGrid } from "react-window";
 
 const Home = () => {
   const theme = useTheme();
@@ -53,7 +54,7 @@ const Home = () => {
         resolve({
           list: data.map((item: any) => ({
             ...item,
-            src: item.thumbs.original,
+            src: item.thumbs.small,
           })),
           meta: (res as any).meta!,
         });
@@ -121,7 +122,7 @@ const Home = () => {
         >
           <Waterfall
             list={data?.list ?? []}
-            cols={{ xs: 2, sm: 4, lg: 5, xl: 8 }}
+            cols={{ xs: 2, sm: 4, lg: 5, xl: 10 }}
             spacing={2}
             onItemShow={(item) => {
               setState({
