@@ -60,7 +60,7 @@ const Waterfall = ({
   });
 
   useCreation(async () => {
-    const colWidth = ((size?.width ?? 0) - (col - 1) * (spacing * 8)) / col;
+    const colWidth = ((size?.width ?? 0) - col * (spacing * 8)) / col;
     setState({
       colList: await allocateItems(list, col, colWidth),
       colWidth,

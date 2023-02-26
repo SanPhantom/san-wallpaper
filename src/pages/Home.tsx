@@ -1,40 +1,36 @@
 import {
-  AppBar,
   Toolbar,
-  Typography,
   Box,
-  IconButton,
-  useTheme,
   CssBaseline,
-  Tooltip,
-  Fab,
-  Fade,
   Stack,
-  Divider,
-  Link,
+  CircularProgress,
+  alpha,
+  Slide,
+  Typography,
 } from "@mui/material";
-import {
-  Search,
-  SearchIconWrapper,
-  StyledInputBase,
-} from "../components/Search";
-import {
-  ExpandLess,
-  Search as SearchIcon,
-  Settings,
-} from "@mui/icons-material";
 import { useSetState, useInfiniteScroll, useBoolean } from "ahooks";
 import { search } from "../services/paper";
 import { useRef } from "react";
 import Waterfall from "../components/Waterfall";
 import ImgFullDrawer from "../components/ImgFullDrawer";
-import { FixedSizeGrid } from "react-window";
+import AppHeader from "../components/AppHeader";
+import AppFooter from "../components/AppFooter";
+import ScrollTopFab from "../components/ScrollTopFab";
+import SearchContextDrawer, {
+  SearchDataType,
+} from "../components/SearchContextDrawer";
+import Loading from "../components/Loading";
 
 const Home = () => {
-  const theme = useTheme();
   const [state, setState] = useSetState({
     search: "",
     selectItem: undefined as any,
+  });
+  const [searchData, setSearchData] = useSetState<SearchDataType>({
+    categories: ["general", "anime"],
+    purity: ["sfw"],
+    sorting: ["date_added"],
+    atleast: ["1920x1080"],
   });
   const [showDrawer, { setTrue: openDrawer, setFalse: closeDrawer }] =
     useBoolean(false);
@@ -42,27 +38,47 @@ const Home = () => {
     showScrollTop,
     { setTrue: openShowScrollTop, setFalse: closeShowScrollTop },
   ] = useBoolean(false);
+  const [
+    settingDrawer,
+    { setTrue: openSettingDrawer, setFalse: closeSettingDrawer },
+  ] = useBoolean(false);
   const targetRef = useRef<HTMLDivElement>(null);
 
-  const { data, loading, reload, loadMore } = useInfiniteScroll(
-    (preData: any) => {
-      return new Promise<any>(async (resolve) => {
+  const { data, loading, reload, loadMore, loadingMore } = useInfiniteScroll(
+    async (preData: any) => {
+      try {
         const { data, ...res } = await search({
           page: (preData?.meta.current_page ?? 0) + 1,
           q: state.search,
+          categories: ["general", "anime", "people"]
+            .map((d: any) => Number(searchData.categories?.includes(d)))
+            .join(""),
+          purity:
+            ["sfw", "sketchy"]
+              .map((d: any) => Number(searchData.purity?.includes(d)))
+              .join("") + "0",
+          sorting: searchData.sorting?.[0],
+          atleast: searchData.atleast?.[0],
         });
-        resolve({
-          list: data.map((item: any) => ({
-            ...item,
-            src: item.thumbs.small,
-          })),
-          meta: (res as any).meta!,
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              list: data.map((item: any) => ({
+                ...item,
+                src: item.thumbs.original,
+              })),
+              meta: (res as any).meta!,
+            });
+          }, 1000);
         });
-      });
+      } catch (error) {
+        loadMore();
+      }
+      return new Promise<any>(async (resolve) => {});
     },
     {
       target: targetRef,
-      reloadDeps: [],
+      threshold: 200,
       isNoMore(data) {
         return (data?.meta.current_page ?? 0) >= (data?.meta.last_page ?? -1);
       },
@@ -75,43 +91,18 @@ const Home = () => {
   return (
     <Stack sx={{ height: "100%" }}>
       <CssBaseline />
-      <AppBar position="fixed" color="primary">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            San Wallpaper
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              value={state.search}
-              onChange={(v) => setState({ search: v.target.value })}
-              onKeyUp={(e) => {
-                if (e.keyCode === 13) {
-                  reload();
-                }
-              }}
-            />
-          </Search>
-          <IconButton sx={{ ml: 1 }}>
-            <Settings htmlColor={theme.palette.common.white} />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <AppHeader
+        searchValue={state.search}
+        onChange={(search) => setState({ search })}
+        onSearch={reload}
+        onSetting={settingDrawer ? closeSettingDrawer : openSettingDrawer}
+      />
 
       <Stack component="main" sx={{ flexGrow: 1, width: "100%", minHeight: 1 }}>
         <Toolbar />
         <Box
           ref={targetRef}
-          sx={{ flexGrow: 1, p: 2, overflow: "auto" }}
+          sx={{ flexGrow: 1, p: 2, overflowY: "scroll", position: "relative" }}
           onScroll={(e) => {
             if ((e.target as HTMLElement).scrollTop !== 0) {
               openShowScrollTop();
@@ -122,7 +113,7 @@ const Home = () => {
         >
           <Waterfall
             list={data?.list ?? []}
-            cols={{ xs: 2, sm: 4, lg: 5, xl: 10 }}
+            cols={{ xs: 2, sm: 4, lg: 5, xl: 8 }}
             spacing={2}
             onItemShow={(item) => {
               setState({
@@ -131,33 +122,18 @@ const Home = () => {
               openDrawer();
             }}
           />
-          {showScrollTop && (
-            <Tooltip title="滚动到顶部">
-              <Fab
-                size="small"
-                color="primary"
-                sx={{ position: "fixed", bottom: 32, right: 32 }}
-                onClick={() => {
-                  targetRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-              >
-                <ExpandLess />
-              </Fab>
-            </Tooltip>
-          )}
+          {(loading || loadingMore) && <Loading />}
+          <ScrollTopFab containerRef={targetRef} isShow={showScrollTop} />
         </Box>
-        <Stack alignItems={"center"}>
-          <Divider sx={{ width: "100%" }} />
-          <Stack alignItems={"center"} spacing={1} sx={{ py: 2 }}>
-            <Typography fontSize={14}>
-              数据来源: <Link href="https://wallhaven.cc/">wall haven</Link>{" "}
-            </Typography>
-            <Typography fontSize={14}>
-              &copy;Copyright 2021-2022 by SanPhantom, All Rights Reserved.
-            </Typography>
-          </Stack>
-        </Stack>
+        <AppFooter />
       </Stack>
+      <SearchContextDrawer
+        searchData={searchData}
+        onDataChange={setSearchData}
+        open={settingDrawer}
+        onClose={closeSettingDrawer}
+        onSubmit={reload}
+      />
 
       <ImgFullDrawer
         open={showDrawer}
