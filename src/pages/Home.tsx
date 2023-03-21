@@ -113,7 +113,7 @@ const Home = () => {
         >
           <Waterfall
             list={data?.list ?? []}
-            cols={{ xs: 2, sm: 4, lg: 5, xl: 8 }}
+            cols={{ xs: 2, sm: 4, lg: 5, xl: 7 }}
             spacing={2}
             onItemShow={(item) => {
               setState({

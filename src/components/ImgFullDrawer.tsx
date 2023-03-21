@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
+import { useMemoizedFn } from "ahooks";
 import React from "react";
 
 interface IImgFullDrawerProps extends DialogProps {
@@ -30,6 +31,26 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
+  const downloadImg = useMemoizedFn(async () => {
+    const img = new Image();
+    img.setAttribute("crossOrigin", "Anonymous");
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context?.drawImage(img, 0, 0, img.width, img.height);
+      let url = canvas.toDataURL(item.file_type);
+      let a = document.createElement("a");
+      const filename = (item.path as string).split("/").pop();
+      const event = new MouseEvent("click");
+      a.download = filename || `${item.id}.png`;
+      a.href = url;
+      a.dispatchEvent(event);
+    };
+    img.src = item.path;
+  });
+
   return (
     <Dialog fullScreen TransitionComponent={Transition} {...dialogProp}>
       <AppBar position="fixed" color="inherit">
@@ -57,7 +78,9 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={() => {}}
+              onClick={() => {
+                downloadImg();
+              }}
               aria-label="download"
             >
               <Download />
@@ -73,7 +96,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           divider={<Divider orientation="vertical" />}
           sx={{ flex: 1, minHeight: 0, fontSize: 0, p: 3 }}
         >
-          <Box sx={{ width: "20%", maxWidth: 400 }}></Box>
+          {/* <Box sx={{ width: "20%", maxWidth: 400 }}></Box> */}
           <Box sx={{ flex: 1, minHeight: 0, fontSize: 0, p: 3 }}>
             <img
               loading="lazy"
