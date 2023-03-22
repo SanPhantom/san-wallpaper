@@ -1,7 +1,7 @@
 import { Box, Paper, Stack } from "@mui/material";
 import { useCreation, useMemoizedFn, useSetState, useSize } from "ahooks";
 import React, { useRef } from "react";
-import { Stage, Layer, Image as CanvasImage } from "react-konva";
+import { Stage, Layer, Image as CanvasImage, Transformer } from "react-konva";
 import useImage from "use-image";
 
 interface IImgCanvasProps {}
@@ -144,6 +144,7 @@ const ImgCanvas = () => {
               onWheel={handleWheel}
               scale={state.scale}
             />
+            <Transformer centeredScaling />
           </Layer>
         </Stage>
       </Box>

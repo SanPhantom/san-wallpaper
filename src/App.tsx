@@ -16,8 +16,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       {/* <Home /> */}
-      {/* <ImgCanvas /> */}
-      <CanvasBg />
+      <ImgCanvas />
+      {/* <CanvasBg /> */}
     </ThemeProvider>
   );
 };
