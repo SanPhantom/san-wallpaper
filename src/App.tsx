@@ -2,6 +2,7 @@ import "./App.less";
 import { ThemeProvider, createTheme } from "@mui/material";
 import Home from "./pages/Home";
 import ImgCanvas from "./pages/ImgCanvas";
+import CanvasBg from "./pages/CanvasBg";
 
 const App = () => {
   const theme = createTheme({
@@ -15,7 +16,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       {/* <Home /> */}
-      <ImgCanvas />
+      {/* <ImgCanvas /> */}
+      <CanvasBg />
     </ThemeProvider>
   );
 };

@@ -6,6 +6,7 @@ specifiers:
   '@mui/icons-material': ^5.11.9
   '@mui/lab': 5.0.0-alpha.120
   '@mui/material': ^5.11.9
+  '@react-spring/konva': ^9.7.1
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
   '@types/react-window': ^1.8.5
@@ -29,6 +30,7 @@ dependencies:
   '@mui/icons-material': 5.11.9_ofpk46txu7v2f5mzrtv4xsczka
   '@mui/lab': 5.0.0-alpha.120_fbyx5axfhkb4vnfgi3pwe6ljca
   '@mui/material': 5.11.9_acl7mc3llczqccvmbrsweq6vga
+  '@react-spring/konva': 9.7.1_ynd42wi4f7cixhctsv52k7vqty
   ahooks: 3.7.4_react@18.2.0
   axios: 1.3.3
   konva: 8.4.2
@@ -858,6 +860,62 @@ packages:
 
   /@popperjs/core/2.11.6:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
+    dev: false
+
+  /@react-spring/animated/9.7.1_react@18.2.0:
+    resolution: {integrity: sha512-EX5KAD9y7sD43TnLeTNG1MgUVpuRO1YaSJRPawHNRgUWYfILge3s85anny4S4eTJGpdp5OoFV2kx9fsfeo0qsw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@react-spring/shared': 9.7.1_react@18.2.0
+      '@react-spring/types': 9.7.1
+      react: 18.2.0
+    dev: false
+
+  /@react-spring/core/9.7.1_react@18.2.0:
+    resolution: {integrity: sha512-8K9/FaRn5VvMa24mbwYxwkALnAAyMRdmQXrARZLcBW2vxLJ6uw9Cy3d06Z8M12kEqF2bDlccaCSDsn2bSz+Q4A==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@react-spring/animated': 9.7.1_react@18.2.0
+      '@react-spring/rafz': 9.7.1
+      '@react-spring/shared': 9.7.1_react@18.2.0
+      '@react-spring/types': 9.7.1
+      react: 18.2.0
+    dev: false
+
+  /@react-spring/konva/9.7.1_ynd42wi4f7cixhctsv52k7vqty:
+    resolution: {integrity: sha512-74svXHtUJi6Tvk9mNLUV1/1WfU8MdWsTK6JUpvmJr/rUr8r3FdOokk22icbgEg6AjxCkIf5e2WFovCCHUSyS0w==}
+    peerDependencies:
+      konva: '>=2.6'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-konva: ^16.8.0 || ^16.8.7-0 || ^16.9.0-0 || ^16.10.1-0 || ^16.12.0-0 || ^16.13.0-0 || ^17.0.0-0 || ^17.0.1-0 || ^17.0.2-0 || ^18.0.0-0
+    dependencies:
+      '@react-spring/animated': 9.7.1_react@18.2.0
+      '@react-spring/core': 9.7.1_react@18.2.0
+      '@react-spring/shared': 9.7.1_react@18.2.0
+      '@react-spring/types': 9.7.1
+      konva: 8.4.2
+      react: 18.2.0
+      react-konva: 18.2.5_d7gpxn44oibr567fgtt3qmuz5a
+    dev: false
+
+  /@react-spring/rafz/9.7.1:
+    resolution: {integrity: sha512-JSsrRfbEJvuE3w/uvU3mCTuWwpQcBXkwoW14lBgzK9XJhuxmscGo59AgJUpFkGOiGAVXFBGB+nEXtSinFsopgw==}
+    dev: false
+
+  /@react-spring/shared/9.7.1_react@18.2.0:
+    resolution: {integrity: sha512-R2kZ+VOO6IBeIAYTIA3C1XZ0ZVg/dDP5FKtWaY8k5akMer9iqf5H9BU0jyt3Qtxn0qQY7whQdf6MTcWtKeaawg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@react-spring/rafz': 9.7.1
+      '@react-spring/types': 9.7.1
+      react: 18.2.0
+    dev: false
+
+  /@react-spring/types/9.7.1:
+    resolution: {integrity: sha512-yBcyfKUeZv9wf/ZFrQszvhSPuDx6Py6yMJzpMnS+zxcZmhXPeOCKZSHwqrUz1WxvuRckUhlgb7eNI/x5e1e8CA==}
     dev: false
 
   /@types/js-cookie/2.2.7:

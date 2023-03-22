@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Paper, Stack } from "@mui/material";
 import { useCreation, useMemoizedFn, useSetState, useSize } from "ahooks";
 import React, { useRef } from "react";
 import { Stage, Layer, Image as CanvasImage } from "react-konva";
@@ -110,8 +110,24 @@ const ImgCanvas = () => {
   });
 
   return (
-    <Box sx={{ width: "100%", height: "100%", p: 2, boxSizing: "border-box" }}>
-      <Box sx={{ width: "100%", height: "100%" }} ref={contextRef}>
+    <Stack
+      sx={{
+        width: "100%",
+        height: "100%",
+        p: 2,
+        boxSizing: "border-box",
+        gap: 2,
+      }}
+    >
+      <Paper sx={{ py: 1, px: 2 }}>
+        <Stack
+          direction={"row"}
+          alignItems="center"
+          justifyContent={"center"}
+          sx={{ width: "100%", height: "100%" }}
+        ></Stack>
+      </Paper>
+      <Box sx={{ width: "100%", height: "100%", flex: 1 }} ref={contextRef}>
         <Stage
           width={size?.width ?? 0}
           height={size?.height ?? 0}
@@ -131,7 +147,7 @@ const ImgCanvas = () => {
           </Layer>
         </Stage>
       </Box>
-    </Box>
+    </Stack>
   );
 };
 
