@@ -1,26 +1,16 @@
+import { Button, Drawer, DrawerProps, Stack, Toolbar } from "@mui/material";
+import MultiSelect from "./common/MultiSelect";
 import {
-  Box,
-  Button,
-  Drawer,
-  DrawerProps,
-  Paper,
-  Select,
-  Stack,
-  ToggleButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { useCreation, useMemoizedFn, useSetState } from "ahooks";
-import React from "react";
-import MultiSelect from "./MultiSelect";
-import { StyledToggleButtonGroup } from "./StyledComponent";
-
-export type SearchDataType = {
-  categories?: ("general" | "anime" | "people")[];
-  purity?: ("sfw" | "sketchy")[];
-  sorting?: string[];
-  atleast?: string[];
-};
+  AtLeastEnum,
+  CategoryEnum,
+  PurityEnum,
+  SearchDataType,
+  SortEnum,
+  atleasts,
+  categories,
+  purities,
+  sorts,
+} from "../types.d";
 
 interface ISearchContextProps extends DrawerProps {
   searchData: SearchDataType;
@@ -46,44 +36,40 @@ const SearchContext = ({
           p: 1,
         }}
       >
-        <MultiSelect<"general" | "anime" | "people">
+        <MultiSelect<keyof typeof CategoryEnum>
           label="壁纸类型"
-          items={[
-            { label: "一般", value: "general" },
-            { label: "动漫", value: "anime" },
-            { label: "人物", value: "people" },
-          ]}
+          items={categories.map((category: keyof typeof CategoryEnum) => ({
+            label: CategoryEnum[category],
+            value: category,
+          }))}
           value={searchData.categories}
           onChange={(categories) => onDataChange?.({ categories })}
         />
-        <MultiSelect<"sfw" | "sketchy">
+        <MultiSelect<keyof typeof PurityEnum>
           label="壁纸级别"
-          items={[
-            { label: "常规", value: "sfw" },
-            { label: "开放", value: "sketchy" },
-          ]}
+          items={purities.map((purity) => ({
+            label: PurityEnum[purity],
+            value: purity,
+          }))}
           value={searchData.purity}
           onChange={(purity) => onDataChange?.({ purity })}
         />
-        <MultiSelect<string>
+        <MultiSelect<keyof typeof SortEnum>
           label="排序规则"
-          items={[
-            { label: "排行", value: "toplist" },
-            { label: "最新", value: "date_added" },
-            { label: "浏览", value: "views" },
-            { label: "收藏", value: "favorites" },
-          ]}
+          items={sorts.map((sort) => ({
+            label: SortEnum[sort],
+            value: sort,
+          }))}
           exclusive
           value={searchData.sorting?.[0]}
           onChange={(sorting) => onDataChange?.({ sorting })}
         />
-        <MultiSelect<string>
+        <MultiSelect<keyof typeof AtLeastEnum>
           label="分辨率"
-          items={[
-            { label: "1080P", value: "1920x1080" },
-            { label: "2K", value: "2560x1440" },
-            { label: "4K", value: "3840x2160" },
-          ]}
+          items={atleasts.map((atleast) => ({
+            label: AtLeastEnum[atleast],
+            value: atleast,
+          }))}
           exclusive
           value={searchData.atleast?.[0]}
           onChange={(atleast) => onDataChange?.({ atleast })}

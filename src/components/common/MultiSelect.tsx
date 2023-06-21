@@ -1,7 +1,7 @@
 import { Paper, Typography, ToggleButton } from "@mui/material";
 import { useMemoizedFn } from "ahooks";
 import React from "react";
-import { StyledToggleButtonGroup } from "./StyledComponent";
+import { StyledToggleButtonGroup } from "../StyledComponent";
 
 interface IMultiSelectProps<T> {
   label: string;

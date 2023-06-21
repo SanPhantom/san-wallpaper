@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { Search, SearchIconWrapper, StyledInputBase } from "./Search";
+import { Search, SearchIconWrapper, StyledInputBase } from "../common/Search";
 import { Search as SearchIcon } from "@mui/icons-material";
 
 interface IAppHeaderProps {
