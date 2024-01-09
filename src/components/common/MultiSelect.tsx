@@ -6,8 +6,8 @@ import { StyledToggleButtonGroup } from "../StyledComponent";
 interface IMultiSelectProps<T> {
   label: string;
   items: any[];
-  value?: T | T[];
-  onChange?: (v: T[]) => void;
+  value?: T;
+  onChange?: (v: T) => void;
   exclusive?: boolean;
 }
 
@@ -19,7 +19,7 @@ const MultiSelect = <T extends string>({
   exclusive,
 }: IMultiSelectProps<T>) => {
   const handleTypes = useMemoizedFn((_, newData) => {
-    onChange?.(exclusive ? [newData] : newData);
+    onChange?.(exclusive ? newData : newData.join("/"));
   });
 
   return (
@@ -31,7 +31,7 @@ const MultiSelect = <T extends string>({
       <StyledToggleButtonGroup
         size="small"
         exclusive={exclusive}
-        value={value}
+        value={value?.split("/")}
         onChange={handleTypes}
       >
         {items.map((item) => (

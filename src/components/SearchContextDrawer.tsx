@@ -3,7 +3,9 @@ import MultiSelect from "./common/MultiSelect";
 import {
   AtLeastEnum,
   CategoryEnum,
+  CategoryTypeEnum,
   PurityEnum,
+  PurityTypeEnum,
   SearchDataType,
   SortEnum,
   atleasts,
@@ -36,42 +38,42 @@ const SearchContext = ({
           p: 1,
         }}
       >
-        <MultiSelect<keyof typeof CategoryEnum>
+        <MultiSelect
           label="壁纸类型"
           items={categories.map((category: keyof typeof CategoryEnum) => ({
-            label: CategoryEnum[category],
-            value: category,
+            label: CategoryTypeEnum[category],
+            value: CategoryEnum[category],
           }))}
           value={searchData.categories}
           onChange={(categories) => onDataChange?.({ categories })}
         />
-        <MultiSelect<keyof typeof PurityEnum>
+        <MultiSelect
           label="壁纸级别"
           items={purities.map((purity) => ({
-            label: PurityEnum[purity],
-            value: purity,
+            label: PurityTypeEnum[purity],
+            value: PurityEnum[purity],
           }))}
           value={searchData.purity}
           onChange={(purity) => onDataChange?.({ purity })}
         />
-        <MultiSelect<keyof typeof SortEnum>
+        <MultiSelect
           label="排序规则"
           items={sorts.map((sort) => ({
             label: SortEnum[sort],
             value: sort,
           }))}
           exclusive
-          value={searchData.sorting?.[0]}
+          value={searchData.sorting}
           onChange={(sorting) => onDataChange?.({ sorting })}
         />
-        <MultiSelect<keyof typeof AtLeastEnum>
+        <MultiSelect
           label="分辨率"
           items={atleasts.map((atleast) => ({
             label: AtLeastEnum[atleast],
             value: atleast,
           }))}
           exclusive
-          value={searchData.atleast?.[0]}
+          value={searchData.atleast}
           onChange={(atleast) => onDataChange?.({ atleast })}
         />
         <Button variant="outlined" onClick={onSubmit}>

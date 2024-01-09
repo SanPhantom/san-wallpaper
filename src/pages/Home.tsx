@@ -5,18 +5,16 @@ import PictureContent from "../components/PictureContent";
 import SearchContextDrawer from "../components/SearchContextDrawer";
 import AppFooter from "../components/layouts/AppFooter";
 import AppHeader from "../components/layouts/AppHeader";
-import { SearchDataType } from "../types";
+import { CategoryEnum, PurityEnum, SearchDataType } from "../types.d";
 
 const Home = () => {
   const [searchKey, setSearchKey] = useState("");
   const [searchData, setSearchData] = useSetState<SearchDataType>({
-    categories: ["general", "anime"],
-    purity: ["sfw"],
-    sorting: ["date_added"],
-    atleast: ["1920x1080"],
+    categories: `${CategoryEnum.general}/${CategoryEnum.anime}`,
+    purity: PurityEnum.sfw,
+    sorting: "date_added",
+    atleast: "1920x1080",
   });
-  const [showDrawer, { setTrue: openDrawer, setFalse: closeDrawer }] =
-    useBoolean(false);
 
   const [
     settingDrawer,
@@ -36,11 +34,7 @@ const Home = () => {
 
       <Stack component="main" sx={{ flexGrow: 1, width: "100%", minHeight: 1 }}>
         <Toolbar />
-        <PictureContent
-          ref={targetRef}
-          searchData={searchData}
-          searchKey={searchKey}
-        />
+        <PictureContent ref={targetRef} />
         <AppFooter />
       </Stack>
       <SearchContextDrawer

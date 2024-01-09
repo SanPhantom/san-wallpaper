@@ -1,8 +1,15 @@
 export enum CategoryEnum {
+  "general" = "100",
+  "anime" = "101",
+  "people" = "111",
+}
+
+export enum CategoryTypeEnum {
   "general" = "一般",
   "anime" = "动漫",
   "people" = "人物",
 }
+
 export const categories: (keyof typeof CategoryEnum)[] = [
   "general",
   "anime",
@@ -10,9 +17,15 @@ export const categories: (keyof typeof CategoryEnum)[] = [
 ];
 
 export enum PurityEnum {
+  "sfw" = "100",
+  "sketchy" = "110",
+}
+
+export enum PurityTypeEnum {
   "sfw" = "常规",
   "sketchy" = "开放",
 }
+
 export const purities: (keyof typeof PurityEnum)[] = ["sfw", "sketchy"];
 
 export enum SortEnum {
@@ -40,8 +53,8 @@ export const atleasts: (keyof typeof AtLeastEnum)[] = [
 ];
 
 export type SearchDataType = {
-  categories?: (keyof typeof CategoryEnum)[];
-  purity?: (keyof typeof PurityEnum)[];
-  sorting?: (keyof typeof SortEnum)[];
-  atleast?: (keyof typeof AtLeastEnum)[];
+  categories?: string;
+  purity?: string;
+  sorting?: string;
+  atleast?: string;
 };

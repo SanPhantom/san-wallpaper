@@ -23,6 +23,7 @@ const ScrollTopFab = ({
           color="primary"
           sx={{ position: "fixed", bottom, right }}
           onClick={() => {
+            console.log("scroll top");
             containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >

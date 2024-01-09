@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const apiKey = "NAUwmedLHpOsMADlcRmpYmoKMdL16uce";
+const apiKey = "gKvVE331jp6UHELWNyP9XbMBxxR3JTGG";
 
 const paperAxios = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "http://localhost:3000/",
   timeout: 600000,
 });
 
