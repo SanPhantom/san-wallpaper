@@ -1,19 +1,20 @@
-import "./App.less";
-import { ThemeProvider, createTheme } from "@mui/material";
-import Home from "./pages/Home";
+import './App.less';
+import { ThemeProvider, createTheme } from '@mui/material';
+import Home from './pages/Home';
+import NewHome from './pages/NewHome';
 
 const App = () => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#d23918",
+        main: '#d23918',
       },
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <NewHome />
     </ThemeProvider>
   );
 };

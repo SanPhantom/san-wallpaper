@@ -10,8 +10,8 @@ import { CategoryEnum, PurityEnum, SearchDataType } from "../types.d";
 const Home = () => {
   const [searchKey, setSearchKey] = useState("");
   const [searchData, setSearchData] = useSetState<SearchDataType>({
-    categories: `${CategoryEnum.general}/${CategoryEnum.anime}`,
-    purity: PurityEnum.sfw,
+    // categories: `${CategoryEnum.general}/${CategoryEnum.anime}`,
+    // purity: PurityEnum.sfw,
     sorting: "date_added",
     atleast: "1920x1080",
   });

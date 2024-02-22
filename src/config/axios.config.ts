@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from 'axios';
 
-const apiKey = "gKvVE331jp6UHELWNyP9XbMBxxR3JTGG";
+const apiKey = 'gKvVE331jp6UHELWNyP9XbMBxxR3JTGG';
 
 const paperAxios = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: 'http://localhost:5188/',
   timeout: 600000,
 });
 
@@ -27,7 +27,7 @@ paperAxios.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default paperAxios;

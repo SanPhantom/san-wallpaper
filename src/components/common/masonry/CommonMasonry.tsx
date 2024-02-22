@@ -34,7 +34,7 @@ export interface CommonMasonryProps<T extends Record<string, any>> {
 }
 
 const CommonMasonry = <T extends Record<string, any>>(
-  props: CommonMasonryProps<T>
+  props: CommonMasonryProps<T>,
 ) => {
   const {
     cols = 2,
@@ -54,6 +54,8 @@ const CommonMasonry = <T extends Record<string, any>>(
   });
 
   const col = useGridCol(cols);
+
+  console.log({ col });
 
   const colWidth = useMemo(() => {
     return Math.floor((width - space * (col - 1)) / col);
@@ -104,7 +106,7 @@ const CommonMasonry = <T extends Record<string, any>>(
         </CellMeasurer>
       );
     },
-    [colWidth, masonryCache, itemRender, list]
+    [colWidth, masonryCache, itemRender, list],
   );
 
   useEffect(() => {
