@@ -1,6 +1,6 @@
 import { Box, Paper, Stack } from '@mui/material';
 import { useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
-import React, { useRef, WheelEventHandler } from 'react';
+import React, { useRef } from 'react';
 import { Image as CanvasImage, Layer, Stage, Transformer } from 'react-konva';
 import type { KonvaEventObject } from 'konva/lib/Node';
 

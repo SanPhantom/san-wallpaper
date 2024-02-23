@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { CssBaseline, Stack, Toolbar } from '@mui/material';
 import AppHeader from '../components/layouts/AppHeader';
 import AppFooter from '../components/layouts/AppFooter';
 import NewPictureContent from '../components/NewPictureContent';
 
 const NewHome = () => {
-  const targetRef = useRef<{ reload: () => void }>();
   return (
     <Stack sx={{ height: '100%' }}>
       <CssBaseline />
