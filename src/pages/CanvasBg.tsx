@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import { useInterval, useMemoizedFn, useSize } from 'ahooks';
+import { useMemoizedFn, useSize } from 'ahooks';
 import React, { useRef } from 'react';
 import { Layer, Stage } from 'react-konva';
-import { animated, config, SpringValue, useSpring, useTransition } from '@react-spring/konva';
+import { animated, config, useSpring } from '@react-spring/konva';
 import { HitContext } from 'konva/lib/Context';
-import { Shape, ShapeConfig } from 'konva/lib/Shape';
+import { Shape } from 'konva/lib/Shape';
 
 const Particle = (props: { index: number }) => {
   const randomHex = useMemoizedFn(() => {
@@ -22,7 +22,7 @@ const Particle = (props: { index: number }) => {
   const y = randomNum(1100);
   const r = 2;
 
-  const [springProps, api] = useSpring(
+  const [springProps] = useSpring(
     () => ({
       form: { fill: `rgba(${red}, ${green}, ${blue}, 0)` },
       to: [
@@ -45,7 +45,6 @@ const Particle = (props: { index: number }) => {
     <animated.Shape
       {...springProps}
       sceneFunc={(context: HitContext, shape: Shape) => {
-        const { width, height } = context.canvas;
         context.beginPath();
         context.arc(x, y, r, 0, 2 * Math.PI, false);
         context.closePath();

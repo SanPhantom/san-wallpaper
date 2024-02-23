@@ -1,12 +1,8 @@
 import { Box, Paper, Stack } from '@mui/material';
 import { useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
-import React, { useCallback, useRef } from 'react';
-import { Stage, Layer, Image as CanvasImage, Transformer } from 'react-konva';
-import useImage from 'use-image';
-import type { Vector2d } from 'konva/lib/types';
-import type { Node, NodeConfig } from 'konva/lib/Node';
-
-interface IImgCanvasProps {}
+import React, { useRef, WheelEventHandler } from 'react';
+import { Image as CanvasImage, Layer, Stage, Transformer } from 'react-konva';
+import type { KonvaEventObject } from 'konva/lib/Node';
 
 const UrlImage = ({
   contentRef,
@@ -100,7 +96,7 @@ const ImgCanvas = () => {
   const [state, setState] = useSetState({
     scale: 1,
   });
-  const handleWheel = useMemoizedFn((e) => {
+  const handleWheel = useMemoizedFn((e: KonvaEventObject<any>) => {
     const delta = e.evt.wheelDelta > 0 ? 0.1 : -0.1;
     if ((state.scale < 2 && delta > 0) || (state.scale > 0.25 && delta < 0)) {
       setState({

@@ -1,5 +1,5 @@
 import { Star } from '@mui/icons-material';
-import { alpha, Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import React, { memo, useRef } from 'react';
 
 interface IImgCardProps {

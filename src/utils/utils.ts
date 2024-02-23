@@ -6,7 +6,7 @@ export const getImageRect = async (item: any) => {
     img.src = item.thumbs.original;
     // img.setAttribute("crossorigin", "anonymous");
 
-    img.onload = (e) => {
+    img.onload = () => {
       let w = Number(img.width);
       let h = Number(img.height);
       resolve({ w, h });

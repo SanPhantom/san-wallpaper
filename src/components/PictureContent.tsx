@@ -1,10 +1,8 @@
 import { Box } from '@mui/material';
 import { useBoolean } from 'ahooks';
 import {
-  ReactNode,
-  RefObject,
   forwardRef,
-  useEffect,
+  RefObject,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -14,9 +12,7 @@ import usePaperPagination, { PaperItemType } from '../atoms/paper.atom';
 import ImgFullDrawer from './ImgFullDrawer';
 import Loading from './common/Loading';
 import ScrollTopFab from './common/ScrollTopFab';
-import Waterfall from './common/waterfall/Waterfall';
 import AutoSizerMasonry from './common/masonry/AutoSizerMasonry';
-import { MasonryItemProps } from './common/masonry/CommonMasonry';
 import ImgCard from './common/ImgCard';
 
 const PictureContent = forwardRef(({}, ref) => {

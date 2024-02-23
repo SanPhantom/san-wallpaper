@@ -1,4 +1,4 @@
-import { Breakpoint, Theme, useMediaQuery, useTheme } from '@mui/material';
+import { Breakpoint, Theme, useTheme } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 
 const useGridCol = (cols: number | { [key in Breakpoint]?: number }): number => {
@@ -10,7 +10,7 @@ const useGridCol = (cols: number | { [key in Breakpoint]?: number }): number => 
     if (typeof cols === 'number') {
       return cols;
     }
-    return keys.reduceRight((output: number, key: Breakpoint, idx: number) => {
+    return keys.reduceRight((output: number, key: Breakpoint) => {
       const query = `(min-width: ${theme.breakpoints.values[key]}px)`;
       const matchMedia = window.matchMedia(query);
       const matches = matchMedia.matches;

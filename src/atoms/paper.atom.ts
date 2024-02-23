@@ -1,5 +1,4 @@
 import { atom, useAtom } from 'jotai';
-import { CategoryEnum, PurityEnum } from '../types.d';
 import { useCallback, useEffect, useMemo } from 'react';
 import { search } from '../services/paper';
 
@@ -69,7 +68,7 @@ const usePaperPagination = (lock: boolean = false) => {
   const [meta, setMeta] = useAtom(metaAtom);
 
   const [pagination, setPagination] = useAtom(paginationAtom);
-  const [searchData, setSearchData] = useAtom(searchAtom);
+  const [searchData] = useAtom(searchAtom);
 
   const [isLock, setLock] = useAtom(lockAtom);
 
@@ -89,11 +88,13 @@ const usePaperPagination = (lock: boolean = false) => {
   }, [pagination, isLock, meta]);
 
   useEffect(() => {
-    if (!lock) {
-      if (pagination.page !== 0) {
-        fetchList();
+    (async () => {
+      if (!lock) {
+        if (pagination.page !== 0) {
+          await fetchList();
+        }
       }
-    }
+    })();
   }, [pagination.page]);
 
   useEffect(() => {

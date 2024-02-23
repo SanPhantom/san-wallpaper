@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
-import { Box, CssBaseline, Stack, Toolbar } from '@mui/material';
+import { CssBaseline, Stack, Toolbar } from '@mui/material';
 import AppHeader from '../components/layouts/AppHeader';
-import PictureContent from '../components/PictureContent';
 import AppFooter from '../components/layouts/AppFooter';
 import NewPictureContent from '../components/NewPictureContent';
 

@@ -5,7 +5,7 @@ import PictureContent from '../components/PictureContent';
 import SearchContextDrawer from '../components/SearchContextDrawer';
 import AppFooter from '../components/layouts/AppFooter';
 import AppHeader from '../components/layouts/AppHeader';
-import { CategoryEnum, PurityEnum, SearchDataType } from '../types.d';
+import { SearchDataType } from '../types';
 
 const Home = () => {
   const [searchKey, setSearchKey] = useState('');

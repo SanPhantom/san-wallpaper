@@ -1,5 +1,5 @@
 import { memo, useRef } from 'react';
-import { useMemoizedFn, useCreation, useSetState, useSize } from 'ahooks';
+import { useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
 import './waterfall.less';
 import { Breakpoint, Grid } from '@mui/material';
 import useGridCol from '../../../hooks/useGridCol';
@@ -22,7 +22,7 @@ const Waterfall = memo(({ list, cols, spacing = 8, onItemShow }: IWaterfallProps
     colWidth: 0,
   });
 
-  const allocateItems = useMemoizedFn(async (ls, len, colWidth) => {
+  const allocateItems = useMemoizedFn(async (ls, len) => {
     const arr: any[][] = [];
     const heightArr: number[] = [];
 
@@ -44,7 +44,7 @@ const Waterfall = memo(({ list, cols, spacing = 8, onItemShow }: IWaterfallProps
       return minIndex;
     };
 
-    ls.forEach((item: any, idx: any) => {
+    ls.forEach((item: any) => {
       const index = getIndexOfMinHeightFlow();
       item.displayHeight = (item.dimension_y * state.colWidth) / item.dimension_x;
       arr[index].push(item);
@@ -53,12 +53,15 @@ const Waterfall = memo(({ list, cols, spacing = 8, onItemShow }: IWaterfallProps
     return arr;
   });
 
-  useCreation(async () => {
-    const colWidth = ((size?.width ?? 0) - col * (spacing * 8)) / col;
-    setState({
-      colList: await allocateItems(list, col, colWidth),
-      colWidth,
-    });
+  useCreation(() => {
+    (async () => {
+      const colWidth = ((size?.width ?? 0) - col * (spacing * 8)) / col;
+      setState({
+        colList: await allocateItems(list, col),
+        colWidth,
+      });
+    })();
+
     return () => {
       setState({
         colList: [],
@@ -82,7 +85,6 @@ const Waterfall = memo(({ list, cols, spacing = 8, onItemShow }: IWaterfallProps
               key={'flow_' + colIdx + '_item_' + idx + '_' + item.displayHeight}
               item={item}
               idx={idx}
-              spacing={spacing}
               onShow={() => onItemShow?.(item)}
             />
           ))}

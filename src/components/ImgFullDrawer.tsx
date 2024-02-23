@@ -2,7 +2,6 @@ import { Close, Download } from '@mui/icons-material';
 import {
   AppBar,
   Box,
-  Button,
   Dialog,
   DialogProps,
   Divider,
@@ -27,7 +26,11 @@ const Transition = React.forwardRef(function Transition(
   },
   ref: React.Ref<unknown>,
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return (
+    <Slide direction="up" ref={ref} {...props}>
+      {props.children}
+    </Slide>
+  );
 });
 
 const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
@@ -75,14 +78,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           </Box>
 
           <Tooltip title="下载原图">
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={() => {
-                downloadImg();
-              }}
-              aria-label="download"
-            >
+            <IconButton edge="start" color="inherit" onClick={downloadImg} aria-label="download">
               <Download />
             </IconButton>
           </Tooltip>
@@ -99,6 +95,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           {/* <Box sx={{ width: "20%", maxWidth: 400 }}></Box> */}
           <Box sx={{ flex: 1, minHeight: 0, fontSize: 0, p: 3 }}>
             <img
+              alt={''}
               loading="lazy"
               src={item?.path}
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}

@@ -2,17 +2,17 @@ import { Button, Drawer, DrawerProps, Stack, Toolbar } from '@mui/material';
 import MultiSelect from './common/MultiSelect';
 import {
   AtLeastEnum,
+  atleasts,
+  categories,
   CategoryEnum,
   CategoryTypeEnum,
+  purities,
   PurityEnum,
   PurityTypeEnum,
   SearchDataType,
   SortEnum,
-  atleasts,
-  categories,
-  purities,
   sorts,
-} from '../types.d';
+} from '../types';
 
 interface ISearchContextProps extends DrawerProps {
   searchData: SearchDataType;

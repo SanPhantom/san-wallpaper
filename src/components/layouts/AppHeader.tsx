@@ -35,7 +35,7 @@ const AppHeader = ({ searchValue, onSearch, onChange, onSetting }: IAppHeaderPro
             value={searchValue}
             onChange={(v) => onChange?.(v.target.value)}
             onKeyUp={(e) => {
-              if (e.keyCode === 13) {
+              if (e.code === 'Enter') {
                 onSearch?.();
               }
             }}
