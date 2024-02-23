@@ -1,4 +1,4 @@
-import { SearchDataType } from "../types";
+import { SearchDataType } from '../types';
 
 export const getImageRect = async (item: any) => {
   return new Promise<{ w: number; h: number }>((resolve) => {
@@ -14,19 +14,14 @@ export const getImageRect = async (item: any) => {
   });
 };
 
-export const formatSearchData = (
-  searchData: SearchDataType,
-  searchKey?: string
-) => {
+export const formatSearchData = (searchData: SearchDataType, searchKey?: string) => {
   return {
     q: searchKey,
-    categories: ["general", "anime", "people"]
+    categories: ['general', 'anime', 'people']
       .map((d: any) => Number(searchData.categories?.includes(d)))
-      .join(""),
+      .join(''),
     purity:
-      ["sfw", "sketchy"]
-        .map((d: any) => Number(searchData.purity?.includes(d)))
-        .join("") + "0",
+      ['sfw', 'sketchy'].map((d: any) => Number(searchData.purity?.includes(d))).join('') + '0',
     sorting: searchData.sorting?.[0],
     atleast: searchData.atleast?.[0],
   };

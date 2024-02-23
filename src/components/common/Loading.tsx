@@ -1,7 +1,7 @@
-import { Stack, CircularProgress, Typography } from "@mui/material";
-import React, { useEffect, useRef } from "react";
-import usePaperPagination from "../../atoms/paper.atom";
-import { useInViewport } from "ahooks";
+import { Stack, CircularProgress, Typography } from '@mui/material';
+import React, { useEffect, useRef } from 'react';
+import usePaperPagination from '../../atoms/paper.atom';
+import { useInViewport } from 'ahooks';
 
 interface ILoadingProps {
   tip?: string;
@@ -23,18 +23,18 @@ const Loading = ({ tip }: ILoadingProps) => {
   return (
     <Stack
       ref={loadingRef}
-      alignItems={"center"}
+      alignItems={'center'}
       direction="row"
-      justifyContent={"center"}
+      justifyContent={'center'}
       spacing={1}
       sx={{
         py: 1,
-        width: "100%",
+        width: '100%',
       }}
     >
       <CircularProgress size={24} />
       <Typography fontSize={14} color="primary.main">
-        {tip ?? "数据加载中..."}
+        {tip ?? '数据加载中...'}
       </Typography>
     </Stack>
   );

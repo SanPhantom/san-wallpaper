@@ -2,6 +2,7 @@ import './App.less';
 import { ThemeProvider, createTheme } from '@mui/material';
 import Home from './pages/Home';
 import NewHome from './pages/NewHome';
+import ImgCanvas from './pages/ImgCanvas';
 
 const App = () => {
   const theme = createTheme({

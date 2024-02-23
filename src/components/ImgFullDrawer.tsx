@@ -1,4 +1,4 @@
-import { Close, Download } from "@mui/icons-material";
+import { Close, Download } from '@mui/icons-material';
 import {
   AppBar,
   Box,
@@ -12,10 +12,10 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
-import { useMemoizedFn } from "ahooks";
-import React from "react";
+} from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import { useMemoizedFn } from 'ahooks';
+import React from 'react';
 
 interface IImgFullDrawerProps extends DialogProps {
   item?: any;
@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },
-  ref: React.Ref<unknown>
+  ref: React.Ref<unknown>,
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -33,17 +33,17 @@ const Transition = React.forwardRef(function Transition(
 const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
   const downloadImg = useMemoizedFn(async () => {
     const img = new Image();
-    img.setAttribute("crossOrigin", "Anonymous");
+    img.setAttribute('crossOrigin', 'Anonymous');
     img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
       canvas.width = img.width;
       canvas.height = img.height;
       context?.drawImage(img, 0, 0, img.width, img.height);
       let url = canvas.toDataURL(item.file_type);
-      let a = document.createElement("a");
-      const filename = (item.path as string).split("/").pop();
-      const event = new MouseEvent("click");
+      let a = document.createElement('a');
+      const filename = (item.path as string).split('/').pop();
+      const event = new MouseEvent('click');
       a.download = filename || `${item.id}.png`;
       a.href = url;
       a.dispatchEvent(event);
@@ -58,7 +58,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           <IconButton
             edge="start"
             color="inherit"
-            onClick={(e) => dialogProp?.onClose?.(e, "escapeKeyDown")}
+            onClick={(e) => dialogProp?.onClose?.(e, 'escapeKeyDown')}
             aria-label="close"
           >
             <Close />
@@ -68,7 +68,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
               variant="h6"
               noWrap
               component="div"
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
             >
               San Wallpaper
             </Typography>
@@ -88,10 +88,10 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      <Stack sx={{ width: "100%", minHeight: 0, flex: 1 }}>
+      <Stack sx={{ width: '100%', minHeight: 0, flex: 1 }}>
         <Toolbar />
         <Stack
-          direction={"row"}
+          direction={'row'}
           spacing={1}
           divider={<Divider orientation="vertical" />}
           sx={{ flex: 1, minHeight: 0, fontSize: 0, p: 3 }}
@@ -101,7 +101,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
             <img
               loading="lazy"
               src={item?.path}
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </Box>
         </Stack>

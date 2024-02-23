@@ -1,8 +1,10 @@
-import { Box, Paper, Stack } from "@mui/material";
-import { useCreation, useMemoizedFn, useSetState, useSize } from "ahooks";
-import React, { useRef } from "react";
-import { Stage, Layer, Image as CanvasImage, Transformer } from "react-konva";
-import useImage from "use-image";
+import { Box, Paper, Stack } from '@mui/material';
+import { useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
+import React, { useCallback, useRef } from 'react';
+import { Stage, Layer, Image as CanvasImage, Transformer } from 'react-konva';
+import useImage from 'use-image';
+import type { Vector2d } from 'konva/lib/types';
+import type { Node, NodeConfig } from 'konva/lib/Node';
 
 interface IImgCanvasProps {}
 
@@ -42,7 +44,7 @@ const UrlImage = ({
   const loadImage = useMemoizedFn(() => {
     const image = new Image();
     // image.src = "https://w.wallhaven.cc/full/qz/wallhaven-qzdqvr.jpg";
-    image.src = "https://w.wallhaven.cc/full/vq/wallhaven-vqz35l.jpg";
+    image.src = 'https://w.wallhaven.cc/full/2y/wallhaven-2ywd3y.png';
     image.onload = () => {
       const imageRate = image.width / image.height;
       const contentRate = (size?.width ?? 0) / (size?.height ?? 0);
@@ -51,9 +53,7 @@ const UrlImage = ({
         setState({
           width: contentRef.current?.clientWidth ?? 0,
           height: image.height * scale,
-          y:
-            ((contentRef.current?.clientHeight ?? 0) - image.height * scale) /
-            2,
+          y: ((contentRef.current?.clientHeight ?? 0) - image.height * scale) / 2,
           x: 0,
         });
       } else {
@@ -112,22 +112,22 @@ const ImgCanvas = () => {
   return (
     <Stack
       sx={{
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
         p: 2,
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         gap: 2,
       }}
     >
       <Paper sx={{ py: 1, px: 2 }}>
         <Stack
-          direction={"row"}
+          direction={'row'}
           alignItems="center"
-          justifyContent={"center"}
-          sx={{ width: "100%", height: "100%" }}
+          justifyContent={'center'}
+          sx={{ width: '100%', height: '100%' }}
         ></Stack>
       </Paper>
-      <Box sx={{ width: "100%", height: "100%", flex: 1 }} ref={contextRef}>
+      <Box sx={{ width: '100%', height: '100%', flex: 1 }} ref={contextRef}>
         <Stage
           width={size?.width ?? 0}
           height={size?.height ?? 0}
@@ -139,11 +139,7 @@ const ImgCanvas = () => {
           }}
         >
           <Layer>
-            <UrlImage
-              contentRef={contextRef}
-              onWheel={handleWheel}
-              scale={state.scale}
-            />
+            <UrlImage contentRef={contextRef} onWheel={handleWheel} scale={state.scale} />
             <Transformer centeredScaling />
           </Layer>
         </Stage>

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const apiKey = 'gKvVE331jp6UHELWNyP9XbMBxxR3JTGG';
+const apiKey = import.meta.env.VITE_WALLPAPER_API_KEY;
 
 const paperAxios = axios.create({
-  baseURL: 'http://localhost:5188/',
+  baseURL: import.meta.env.VITE_PUBLIC_SERVER_HOST,
   timeout: 600000,
 });
 

@@ -1,5 +1,5 @@
-import { Button, Drawer, DrawerProps, Stack, Toolbar } from "@mui/material";
-import MultiSelect from "./common/MultiSelect";
+import { Button, Drawer, DrawerProps, Stack, Toolbar } from '@mui/material';
+import MultiSelect from './common/MultiSelect';
 import {
   AtLeastEnum,
   CategoryEnum,
@@ -12,7 +12,7 @@ import {
   categories,
   purities,
   sorts,
-} from "../types.d";
+} from '../types.d';
 
 interface ISearchContextProps extends DrawerProps {
   searchData: SearchDataType;
@@ -32,9 +32,9 @@ const SearchContext = ({
       <Stack
         spacing={2}
         alignItems="center"
-        justifyContent={"center"}
+        justifyContent={'center'}
         sx={{
-          width: "100%",
+          width: '100%',
           p: 1,
         }}
       >

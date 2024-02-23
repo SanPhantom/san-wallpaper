@@ -1,15 +1,13 @@
-import { Breakpoint, Theme, useMediaQuery, useTheme } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { Breakpoint, Theme, useMediaQuery, useTheme } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
 
-const useGridCol = (
-  cols: number | { [key in Breakpoint]?: number },
-): number => {
+const useGridCol = (cols: number | { [key in Breakpoint]?: number }): number => {
   const theme: Theme = useTheme();
   const keys: readonly Breakpoint[] = [...theme.breakpoints.keys].reverse();
   const [currentCol, setCurrentCol] = useState(0);
 
   const handleListenCol = useCallback(() => {
-    if (typeof cols === "number") {
+    if (typeof cols === 'number') {
       return cols;
     }
     return keys.reduceRight((output: number, key: Breakpoint, idx: number) => {

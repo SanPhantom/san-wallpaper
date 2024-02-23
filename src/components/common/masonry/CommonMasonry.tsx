@@ -1,12 +1,6 @@
-import { Breakpoint, Stack } from "@mui/material";
-import { useUpdateEffect } from "ahooks";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Breakpoint, Stack } from '@mui/material';
+import { useUpdateEffect } from 'ahooks';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CellMeasurer,
   CellMeasurerCache,
@@ -14,8 +8,8 @@ import {
   MasonryCellProps,
   MasonryState,
   createMasonryCellPositioner,
-} from "react-virtualized";
-import useGridCol from "../../../hooks/useGridCol";
+} from 'react-virtualized';
+import useGridCol from '../../../hooks/useGridCol';
 
 export interface MasonryItemProps<T extends Record<string, any>> {
   item: T;
@@ -33,18 +27,8 @@ export interface CommonMasonryProps<T extends Record<string, any>> {
   itemRender: (props: MasonryItemProps<T>) => React.ReactNode;
 }
 
-const CommonMasonry = <T extends Record<string, any>>(
-  props: CommonMasonryProps<T>,
-) => {
-  const {
-    cols = 2,
-    space = 16,
-    width,
-    height = 0,
-    list,
-    scrollTop,
-    itemRender,
-  } = props;
+const CommonMasonry = <T extends Record<string, any>>(props: CommonMasonryProps<T>) => {
+  const { cols = 2, space = 16, width, height = 0, list, scrollTop, itemRender } = props;
 
   const masonryRef = useRef<Masonry>(null);
 
@@ -92,16 +76,9 @@ const CommonMasonry = <T extends Record<string, any>>(
     ({ index, key, parent, style }: MasonryCellProps) => {
       const masonryItem = list[index];
       return (
-        <CellMeasurer
-          cache={masonryCache}
-          index={index}
-          key={key}
-          parent={parent}
-        >
+        <CellMeasurer cache={masonryCache} index={index} key={key} parent={parent}>
           <Stack style={{ ...style, width: colWidth }}>
-            {masonryItem
-              ? itemRender({ item: masonryItem, index, colWidth })
-              : null}
+            {masonryItem ? itemRender({ item: masonryItem, index, colWidth }) : null}
           </Stack>
         </CellMeasurer>
       );

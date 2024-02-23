@@ -1,7 +1,7 @@
-import { Paper, Typography, ToggleButton } from "@mui/material";
-import { useMemoizedFn } from "ahooks";
-import React from "react";
-import { StyledToggleButtonGroup } from "../StyledComponent";
+import { Paper, Typography, ToggleButton } from '@mui/material';
+import { useMemoizedFn } from 'ahooks';
+import React from 'react';
+import { StyledToggleButtonGroup } from '../StyledComponent';
 
 interface IMultiSelectProps<T> {
   label: string;
@@ -19,19 +19,16 @@ const MultiSelect = <T extends string>({
   exclusive,
 }: IMultiSelectProps<T>) => {
   const handleTypes = useMemoizedFn((_, newData) => {
-    onChange?.(exclusive ? newData : newData.join("/"));
+    onChange?.(exclusive ? newData : newData.join('/'));
   });
 
   return (
-    <Paper
-      elevation={1}
-      sx={{ display: "flex", alignItems: "center", px: 1.5 }}
-    >
+    <Paper elevation={1} sx={{ display: 'flex', alignItems: 'center', px: 1.5 }}>
       <Typography fontSize={14}>{label}：</Typography>
       <StyledToggleButtonGroup
         size="small"
         exclusive={exclusive}
-        value={value?.split("/")}
+        value={value?.split('/')}
         onChange={handleTypes}
       >
         {items.map((item) => (

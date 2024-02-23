@@ -1,7 +1,7 @@
-import { atom, useAtom } from "jotai";
-import { CategoryEnum, PurityEnum } from "../types.d";
-import { useCallback, useEffect, useMemo } from "react";
-import { search } from "../services/paper";
+import { atom, useAtom } from 'jotai';
+import { CategoryEnum, PurityEnum } from '../types.d';
+import { useCallback, useEffect, useMemo } from 'react';
+import { search } from '../services/paper';
 
 export type MetaType = {
   current_page: number;
@@ -48,8 +48,8 @@ export type SearchDataType = {
 export const defaultSearch: SearchDataType = {
   // categories: `${CategoryEnum.general}/${CategoryEnum.anime}`,
   // purity: PurityEnum.sfw,
-  sorting: "date_added",
-  atleast: "1920x1080",
+  sorting: 'date_added',
+  atleast: '1920x1080',
 };
 
 const paperListAtom = atom<PaperItemType[]>([]);
@@ -111,7 +111,7 @@ const usePaperPagination = (lock: boolean = false) => {
       loadMore,
       isLock,
     }),
-    [list, meta, searchData, loadMore, isLock]
+    [list, meta, searchData, loadMore, isLock],
   );
 };
 

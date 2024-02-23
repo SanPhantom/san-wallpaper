@@ -1,16 +1,10 @@
-import { Box } from "@mui/material";
-import { useInterval, useMemoizedFn, useSize } from "ahooks";
-import React, { useRef } from "react";
-import { Layer, Stage } from "react-konva";
-import {
-  animated,
-  config,
-  SpringValue,
-  useSpring,
-  useTransition,
-} from "@react-spring/konva";
-import { HitContext } from "konva/lib/Context";
-import { Shape, ShapeConfig } from "konva/lib/Shape";
+import { Box } from '@mui/material';
+import { useInterval, useMemoizedFn, useSize } from 'ahooks';
+import React, { useRef } from 'react';
+import { Layer, Stage } from 'react-konva';
+import { animated, config, SpringValue, useSpring, useTransition } from '@react-spring/konva';
+import { HitContext } from 'konva/lib/Context';
+import { Shape, ShapeConfig } from 'konva/lib/Shape';
 
 const Particle = (props: { index: number }) => {
   const randomHex = useMemoizedFn(() => {
@@ -43,7 +37,7 @@ const Particle = (props: { index: number }) => {
         delay: props.index,
       },
     }),
-    []
+    [],
   );
 
   return (
@@ -78,7 +72,7 @@ const CanvasBg = () => {
   const size = useSize(containerRef);
 
   return (
-    <Box sx={{ width: "100%", height: "100%" }} ref={containerRef}>
+    <Box sx={{ width: '100%', height: '100%' }} ref={containerRef}>
       <Stage {...size}>
         <Layer>
           <ParticleCanvas num={120} />

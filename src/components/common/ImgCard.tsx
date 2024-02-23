@@ -8,7 +8,7 @@ interface IImgCardProps {
   onShow?: () => void;
 }
 
-const ImgCard = memo(({ item }: IImgCardProps) => {
+const ImgCard = memo(({ item, onShow }: IImgCardProps) => {
   const containerRef = useRef(null);
 
   return (
@@ -24,6 +24,7 @@ const ImgCard = memo(({ item }: IImgCardProps) => {
       }}
       title={item.text || ''}
       ref={containerRef}
+      onClick={onShow}
     >
       <Box
         sx={{
