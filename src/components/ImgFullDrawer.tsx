@@ -15,6 +15,7 @@ import {
 import { TransitionProps } from '@mui/material/transitions';
 import { useMemoizedFn } from 'ahooks';
 import React from 'react';
+import ImageCanvas from './common/ImageCanvas';
 
 interface IImgFullDrawerProps extends DialogProps {
   item?: any;
@@ -90,16 +91,11 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
           direction={'row'}
           spacing={1}
           divider={<Divider orientation="vertical" />}
-          sx={{ flex: 1, minHeight: 0, fontSize: 0, p: 3 }}
+          sx={{ flex: 1, minHeight: 0, fontSize: 0 }}
         >
           {/* <Box sx={{ width: "20%", maxWidth: 400 }}></Box> */}
-          <Box sx={{ flex: 1, minHeight: 0, fontSize: 0, p: 3 }}>
-            <img
-              alt={''}
-              loading="lazy"
-              src={item?.path}
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            />
+          <Box sx={{ flex: 1, minHeight: 0, fontSize: 0 }}>
+            <ImageCanvas url={item?.path} />
           </Box>
         </Stack>
       </Stack>

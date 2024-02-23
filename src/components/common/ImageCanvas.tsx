@@ -1,11 +1,14 @@
-import { Box, Paper, Stack } from '@mui/material';
-import { useMemoizedFn, useSetState, useSize } from 'ahooks';
 import React, { useRef } from 'react';
+import { Box, Stack } from '@mui/material';
 import { Layer, Stage, Transformer } from 'react-konva';
+import { useMemoizedFn, useSetState, useSize } from 'ahooks';
 import type { KonvaEventObject } from 'konva/lib/Node';
-import UrlImage from '../components/common/UrlImage';
+import UrlImage from './UrlImage';
 
-const ImgCanvas = () => {
+interface ImageCanvasProps {
+  url: string;
+}
+const ImageCanvas = ({ url }: ImageCanvasProps) => {
   const contextRef = useRef<HTMLDivElement>(null);
   const size = useSize(contextRef);
 
@@ -20,7 +23,6 @@ const ImgCanvas = () => {
       });
     }
   });
-
   return (
     <Stack
       sx={{
@@ -31,15 +33,7 @@ const ImgCanvas = () => {
         gap: 2,
       }}
     >
-      <Paper sx={{ py: 1, px: 2 }}>
-        <Stack
-          direction={'row'}
-          alignItems="center"
-          justifyContent={'center'}
-          sx={{ width: '100%', height: '100%' }}
-        ></Stack>
-      </Paper>
-      <Box sx={{ width: '100%', height: '100%', flex: 1 }} ref={contextRef}>
+      <Box sx={{ width: '100%', height: '100%', flex: 1, border: '1px solid' }} ref={contextRef}>
         <Stage
           width={size?.width ?? 0}
           height={size?.height ?? 0}
@@ -51,7 +45,7 @@ const ImgCanvas = () => {
           }}
         >
           <Layer>
-            <UrlImage url={''} contentRef={contextRef} onWheel={handleWheel} scale={state.scale} />
+            <UrlImage url={url} contentRef={contextRef} onWheel={handleWheel} scale={state.scale} />
             <Transformer centeredScaling />
           </Layer>
         </Stage>
@@ -60,4 +54,4 @@ const ImgCanvas = () => {
   );
 };
 
-export default ImgCanvas;
+export default ImageCanvas;
