@@ -40,7 +40,7 @@ const CommonMasonry = ({
 
   return useMasonry({
     positioner,
-    scrollTop: scrollTop ?? 0,
+    scrollTop,
     height,
     isScrolling,
     containerRef,
@@ -80,7 +80,7 @@ const NewPictureContent = () => {
         />
         <Loading />
       </Box>
-      <ImgFullDrawer open={open} item={selectItem} onClose={hideDrawer} />
+      {open && selectItem && <ImgFullDrawer open={open} item={selectItem} onClose={hideDrawer} />}
     </Stack>
   );
 };

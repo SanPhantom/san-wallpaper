@@ -1,12 +1,22 @@
-import { alpha, Box, Button, Dialog, DialogProps, Slide, Stack, Typography } from '@mui/material';
+import {
+  alpha,
+  Box,
+  Button,
+  Dialog,
+  DialogProps,
+  Slide,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import React from 'react';
+import React, { useCallback } from 'react';
 import ImageCanvas from './common/ImageCanvas';
-import { Close, FileDownload } from '@mui/icons-material';
+import { Close, FileDownloadOutlined } from '@mui/icons-material';
 import { PaperItemType } from '../atoms/paper.atom';
 
 interface IImgFullDrawerProps extends DialogProps {
-  item?: PaperItemType | null;
+  item: PaperItemType;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -23,6 +33,27 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
+  const theme = useTheme();
+
+  const downloadImage = useCallback(() => {
+    const tag = document.createElement('a');
+
+    const img = new Image();
+    img.src = item.path;
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = item.dimension_x;
+      canvas.height = item.dimension_y;
+      const ctx = canvas.getContext('2d');
+      // 以图片为背景剪裁画布
+      ctx?.drawImage(img, 0, 0, item.dimension_x, item.dimension_y);
+
+      tag.href = canvas.toDataURL(item.file_type, 1);
+      tag.click();
+    };
+  }, [item]);
+
   return (
     <Dialog
       fullWidth
@@ -69,26 +100,37 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
                 height: '100%',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                p: 2,
+                px: 2,
+                py: 4,
               }}
             >
               <Stack>
                 <Stack sx={{ gap: 1 }}>
                   <Typography variant={'h3'} fontSize={16}>
-                    Colors:
+                    颜色:
                   </Typography>
                   <Stack sx={{ flexDirection: 'row', gap: 1 }}>
                     {item?.colors.map((color) => (
                       <Box
                         key={color}
                         title={color}
-                        sx={{ backgroundColor: color, width: 48, height: 48, borderRadius: 1 }}
+                        sx={{
+                          backgroundColor: color,
+                          width: 48,
+                          height: 48,
+                          borderRadius: 1,
+                          boxShadow: theme.shadows[2],
+                        }}
                       />
                     ))}
                   </Stack>
                 </Stack>
               </Stack>
-              <Button variant={'contained'} startIcon={<FileDownload />}>
+              <Button
+                variant={'contained'}
+                startIcon={<FileDownloadOutlined />}
+                onClick={downloadImage}
+              >
                 <Typography variant={'body2'} fontWeight={500}>
                   下载图片
                 </Typography>
