@@ -24,6 +24,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
   return (
     <Dialog
       fullWidth
+      TransitionComponent={Transition}
       {...dialogProp}
       PaperProps={{
         sx: {
