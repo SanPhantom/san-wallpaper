@@ -27,6 +27,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-konva": "^18.2.5",
+    "react-konva-utils": "^1.0.6",
     "react-virtualized": "^9.22.5",
     "react-window": "^1.8.8",
     "use-image": "^1.1.0"

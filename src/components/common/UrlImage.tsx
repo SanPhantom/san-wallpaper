@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
-import { useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
+import { useBoolean, useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
 import { Image as CanvasImage } from 'react-konva';
+import { Html } from 'react-konva-utils';
 
 const UrlImage = ({
   contentRef,
@@ -25,6 +26,8 @@ const UrlImage = ({
   });
   const size = useSize(contentRef);
 
+  const [imgLoading, { setTrue: startLoading, setFalse: closeLoading }] = useBoolean(false);
+
   const handleDragStart = useMemoizedFn(() => {
     setState({
       isDragging: true,
@@ -41,6 +44,7 @@ const UrlImage = ({
     const image = new Image();
     image.src = url;
     image.onload = () => {
+      closeLoading();
       const imageRate = image.width / image.height;
       const contentRate = (size?.width ?? 0) / (size?.height ?? 0);
       if (imageRate > contentRate) {
@@ -67,10 +71,27 @@ const UrlImage = ({
   }, [url, size]);
 
   useCreation(() => {
-    loadImage();
+    startLoading();
+    if (size) {
+      loadImage();
+    }
   }, [size]);
 
-  return (
+  return imgLoading ? (
+    <Html>
+      <div
+        style={{
+          ...size,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <progress style={{ color: '#845ef7' }} />
+      </div>
+    </Html>
+  ) : (
     <CanvasImage
       image={state.img}
       draggable

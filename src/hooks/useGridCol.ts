@@ -14,7 +14,6 @@ const useGridCol = (cols: number | { [key in Breakpoint]?: number }): number => 
       const query = `(min-width: ${theme.breakpoints.values[key]}px)`;
       const matchMedia = window.matchMedia(query);
       const matches = matchMedia.matches;
-      console.log(matches, key, query);
       const curCol = cols[key];
       return matches ? curCol ?? output : output;
     }, 2);

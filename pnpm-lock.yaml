@@ -59,6 +59,9 @@ dependencies:
   react-konva:
     specifier: ^18.2.5
     version: 18.2.5(konva@8.4.2)(react-dom@18.2.0)(react@18.2.0)
+  react-konva-utils:
+    specifier: ^1.0.6
+    version: 1.0.6(konva@8.4.2)(react-dom@18.2.0)(react@18.2.0)
   react-virtualized:
     specifier: ^9.22.5
     version: 9.22.5(react-dom@18.2.0)(react@18.2.0)
@@ -2006,6 +2009,20 @@ packages:
 
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+    dev: false
+
+  /react-konva-utils@1.0.6(konva@8.4.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-011+jyXwadFDkbIUdlTarKwbqME0ljX1vPeW5oyLQx4rtHdcsDr43tdOdSsMT3XpZyl8clgM9I/eK0lBuBuFHg==}
+    peerDependencies:
+      konva: ^8.3.5 || ^9.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      konva: 8.4.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-konva: 18.2.5(konva@8.4.2)(react-dom@18.2.0)(react@18.2.0)
+      use-image: 1.1.0(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /react-konva@18.2.5(konva@8.4.2)(react-dom@18.2.0)(react@18.2.0):

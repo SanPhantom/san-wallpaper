@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
-import { alpha, Box, IconButton, Paper, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { Layer, Stage, Transformer } from 'react-konva';
 import { useMemoizedFn, useSetState, useSize } from 'ahooks';
 import type { KonvaEventObject } from 'konva/lib/Node';
 import UrlImage from './UrlImage';
-import { FileDownload, FileDownloadOutlined } from '@mui/icons-material';
 
 interface ImageCanvasProps {
   url: string;
