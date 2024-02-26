@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useBoolean, useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
 import { Image as CanvasImage } from 'react-konva';
 import { Html } from 'react-konva-utils';
+import { LinearProgress } from '@mui/material'
 
 const UrlImage = ({
   contentRef,
@@ -88,7 +89,7 @@ const UrlImage = ({
           justifyContent: 'center',
         }}
       >
-        <progress style={{ color: '#845ef7' }} />
+        <progress  role="progressbar"></progress>
       </div>
     </Html>
   ) : (

@@ -32,8 +32,8 @@ const Loading = ({ tip }: ILoadingProps) => {
         width: '100%',
       }}
     >
-      <CircularProgress size={24} />
-      <Typography fontSize={14} color="primary.main">
+      <CircularProgress size={18} />
+      <Typography fontSize={12} color="primary.main">
         {tip ?? '数据加载中...'}
       </Typography>
     </Stack>

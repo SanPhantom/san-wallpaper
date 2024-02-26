@@ -40,6 +40,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
 
     const img = new Image();
     img.src = item.path;
+    img.crossOrigin = 'anonymous'
 
     img.onload = () => {
       const canvas = document.createElement('canvas');
@@ -49,8 +50,13 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
       // 以图片为背景剪裁画布
       ctx?.drawImage(img, 0, 0, item.dimension_x, item.dimension_y);
 
+      const filename = item.path.split('/').pop();
+
       tag.href = canvas.toDataURL(item.file_type, 1);
-      tag.click();
+      tag.download = filename!;
+      tag.dispatchEvent(new MouseEvent('click'));
+      document.removeChild(tag);
+      document.removeChild(canvas);
     };
   }, [item]);
 
@@ -130,6 +136,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
                 variant={'contained'}
                 startIcon={<FileDownloadOutlined />}
                 onClick={downloadImage}
+                sx={{color: 'common.white'}}
               >
                 <Typography variant={'body2'} fontWeight={500}>
                   下载图片
