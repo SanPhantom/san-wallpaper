@@ -1,13 +1,4 @@
-import {
-  alpha,
-  Box,
-  Dialog,
-  DialogContent,
-  DialogProps,
-  Divider,
-  Slide,
-  Stack,
-} from '@mui/material';
+import { alpha, Box, Dialog, DialogProps, Slide, Stack } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import React from 'react';
 import ImageCanvas from './common/ImageCanvas';

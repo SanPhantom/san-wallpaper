@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useRef, useState } from 'react';
 import usePaperPagination, { PaperItemType } from '../atoms/paper.atom';
 import { Box, Stack } from '@mui/material';
 import {
@@ -10,10 +10,9 @@ import {
   useScroller,
 } from 'masonic';
 import ImgCard from './common/ImgCard';
-import { useBoolean, useScroll, useSize } from 'ahooks';
+import { useBoolean } from 'ahooks';
 import Loading from './common/Loading';
 import useGridCol from '../hooks/useGridCol';
-import ScrollTopFab from './common/ScrollTopFab';
 import ImgFullDrawer from './ImgFullDrawer';
 import { useWindowSize } from '@react-hook/window-size';
 
