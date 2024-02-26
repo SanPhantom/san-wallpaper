@@ -1,5 +1,5 @@
 import { Settings } from '@mui/icons-material';
-import { AppBar, Toolbar, Typography, IconButton, useTheme } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, useTheme, Divider } from '@mui/material';
 import React from 'react';
 import { Search, SearchIconWrapper, StyledInputBase } from '../common/Search';
 import { Search as SearchIcon } from '@mui/icons-material';
@@ -15,13 +15,21 @@ const AppHeader = ({ searchValue, onSearch, onChange, onSetting }: IAppHeaderPro
   const theme = useTheme();
 
   return (
-    <AppBar position="fixed" color="primary" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: '#ffffff',
+        color: 'common.black',
+        boxShadow: 'none',
+      }}
+    >
       <Toolbar>
         <Typography
           variant="h6"
           noWrap
           component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: 'common.black' }}
         >
           San Wallpaper
         </Typography>
@@ -42,9 +50,10 @@ const AppHeader = ({ searchValue, onSearch, onChange, onSetting }: IAppHeaderPro
           />
         </Search>
         <IconButton sx={{ ml: 1 }} onClick={onSetting}>
-          <Settings htmlColor={theme.palette.common.white} />
+          <Settings htmlColor={theme.palette.common.black} />
         </IconButton>
       </Toolbar>
+      <Divider sx={{ width: '100%' }} />
     </AppBar>
   );
 };

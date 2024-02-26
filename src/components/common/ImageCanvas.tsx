@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Box, Stack } from '@mui/material';
+import { Box, Paper, Stack } from '@mui/material';
 import { Layer, Stage, Transformer } from 'react-konva';
 import { useMemoizedFn, useSetState, useSize } from 'ahooks';
 import type { KonvaEventObject } from 'konva/lib/Node';
@@ -31,9 +31,22 @@ const ImageCanvas = ({ url }: ImageCanvasProps) => {
         p: 2,
         boxSizing: 'border-box',
         gap: 2,
+        position: 'relative',
       }}
     >
-      <Box sx={{ width: '100%', height: '100%', flex: 1, border: '1px solid' }} ref={contextRef}>
+      <Paper sx={{ position: 'absolute', left: '10%', top: 48, p: 2, width: '80%', zIndex: 99 }}>
+        123
+      </Paper>
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          flex: 1,
+          borderRadius: 4,
+          overflow: 'hidden',
+        }}
+        ref={contextRef}
+      >
         <Stage
           width={size?.width ?? 0}
           height={size?.height ?? 0}

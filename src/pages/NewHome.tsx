@@ -9,11 +9,12 @@ const NewHome = () => {
     <Stack sx={{ height: '100%' }}>
       <CssBaseline />
       <AppHeader />
-      <Stack component="main" sx={{ flexGrow: 1, width: '100%', minHeight: 1 }}>
+      <Stack component="main" sx={{ width: '100%' }}>
         <Toolbar />
         <NewPictureContent />
-        <AppFooter />
+        <div style={{ height: 56 }}></div>
       </Stack>
+      <AppFooter />
     </Stack>
   );
 };

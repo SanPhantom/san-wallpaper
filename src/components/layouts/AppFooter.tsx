@@ -5,8 +5,12 @@ const AppFooter = () => {
     <Stack
       alignItems={'center'}
       sx={{
+        height: 56,
         width: '100%',
         bgcolor: 'common.white',
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
       }}
     >
       <Divider sx={{ width: '100%' }} />
