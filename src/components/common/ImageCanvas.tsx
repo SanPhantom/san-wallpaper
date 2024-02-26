@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
-import { Box, Paper, Stack } from '@mui/material';
+import { alpha, Box, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { Layer, Stage, Transformer } from 'react-konva';
 import { useMemoizedFn, useSetState, useSize } from 'ahooks';
 import type { KonvaEventObject } from 'konva/lib/Node';
 import UrlImage from './UrlImage';
+import { FileDownload, FileDownloadOutlined } from '@mui/icons-material';
 
 interface ImageCanvasProps {
   url: string;
@@ -24,46 +25,32 @@ const ImageCanvas = ({ url }: ImageCanvasProps) => {
     }
   });
   return (
-    <Stack
+    <Box
       sx={{
         width: '100%',
         height: '100%',
-        p: 2,
-        boxSizing: 'border-box',
-        gap: 2,
-        position: 'relative',
+        flex: 1,
+        borderRadius: 4,
+        overflow: 'hidden',
       }}
+      ref={contextRef}
     >
-      <Paper sx={{ position: 'absolute', left: '10%', top: 48, p: 2, width: '80%', zIndex: 99 }}>
-        123
-      </Paper>
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          flex: 1,
-          borderRadius: 4,
-          overflow: 'hidden',
+      <Stage
+        width={size?.width ?? 0}
+        height={size?.height ?? 0}
+        onWheel={handleWheel}
+        draggable
+        onContextMenu={(e) => {
+          e.evt.stopPropagation();
+          e.evt.preventDefault();
         }}
-        ref={contextRef}
       >
-        <Stage
-          width={size?.width ?? 0}
-          height={size?.height ?? 0}
-          onWheel={handleWheel}
-          draggable
-          onContextMenu={(e) => {
-            e.evt.stopPropagation();
-            e.evt.preventDefault();
-          }}
-        >
-          <Layer>
-            <UrlImage url={url} contentRef={contextRef} onWheel={handleWheel} scale={state.scale} />
-            <Transformer centeredScaling />
-          </Layer>
-        </Stage>
-      </Box>
-    </Stack>
+        <Layer>
+          <UrlImage url={url} contentRef={contextRef} onWheel={handleWheel} scale={state.scale} />
+          <Transformer centeredScaling />
+        </Layer>
+      </Stage>
+    </Box>
   );
 };
 

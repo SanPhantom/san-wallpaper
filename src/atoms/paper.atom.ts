@@ -1,6 +1,7 @@
 import { atom, useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo } from 'react';
 import { search } from '../services/paper';
+import { CategoryEnum, PurityEnum } from '../types.d';
 
 export type MetaType = {
   current_page: number;
@@ -45,8 +46,8 @@ export type SearchDataType = {
 };
 
 export const defaultSearch: SearchDataType = {
-  // categories: `${CategoryEnum.general}/${CategoryEnum.anime}`,
-  // purity: PurityEnum.sfw,
+  categories: `${CategoryEnum.general}/${CategoryEnum.anime}`,
+  purity: PurityEnum.sfw,
   sorting: 'date_added',
   atleast: '1920x1080',
 };
