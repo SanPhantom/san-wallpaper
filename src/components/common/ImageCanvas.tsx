@@ -17,7 +17,7 @@ const ImageCanvas = ({ url }: ImageCanvasProps) => {
   });
   const handleWheel = useMemoizedFn((e: KonvaEventObject<any>) => {
     const delta = e.evt.wheelDelta > 0 ? 0.1 : -0.1;
-    if ((state.scale < 2 && delta > 0) || (state.scale > 0.25 && delta < 0)) {
+    if ((state.scale < 2 && delta > 0) || (state.scale > 0.5 && delta < 0)) {
       setState({
         scale: state.scale + delta,
       });
@@ -29,7 +29,6 @@ const ImageCanvas = ({ url }: ImageCanvasProps) => {
         width: '100%',
         height: '100%',
         flex: 1,
-        borderRadius: 4,
         overflow: 'hidden',
       }}
       ref={contextRef}

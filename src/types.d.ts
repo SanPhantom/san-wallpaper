@@ -21,6 +21,7 @@ export enum PurityEnum {
 export enum PurityTypeEnum {
   'sfw' = '常规',
   'sketchy' = '开放',
+  'nsfw' = '隐藏',
 }
 
 export const purities: (keyof typeof PurityEnum)[] = ['sfw', 'sketchy', 'nsfw'];

@@ -6,6 +6,7 @@ import {
   DialogProps,
   Slide,
   Stack,
+  Toolbar,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -40,7 +41,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
 
     const img = new Image();
     img.src = item.path;
-    img.crossOrigin = 'anonymous'
+    img.crossOrigin = 'anonymous';
 
     img.onload = () => {
       const canvas = document.createElement('canvas');
@@ -77,30 +78,26 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
       }}
     >
       <Stack sx={{ width: '100%', height: '100%', position: 'relative' }}>
-        <Button
-          onClick={(event) => {
-            dialogProp.onClose?.(event, 'backdropClick');
-          }}
-          variant={'contained'}
-          sx={{
-            position: 'absolute',
-            right: 24,
-            top: 24,
-            minWidth: 0,
-            p: 1,
-            bgcolor: 'common.white',
-            color: 'common.black',
-            zIndex: 999,
-            '&:hover': {
-              backgroundColor: '#f1f3f5',
-            },
-          }}
-        >
-          <Close />
-        </Button>
         <Stack sx={{ width: '100%', height: '100%', flexDirection: 'row' }}>
           <ImageCanvas url={item?.path ?? ''} />
-          <Stack sx={{ minWidth: 320, width: '20%', bgcolor: 'common.white', pt: 8 }}>
+          <Stack sx={{ minWidth: 320, width: '20%', bgcolor: 'common.white' }}>
+            <Toolbar sx={{ borderBottom: `1px solid ${theme.palette.grey['200']}` }}>
+              <Stack sx={{ width: '100%', justifyContent: 'flex-end', flexDirection: 'row' }}>
+                <Button
+                  onClick={(event) => {
+                    dialogProp.onClose?.(event, 'backdropClick');
+                  }}
+                  variant={'text'}
+                  sx={{
+                    minWidth: 0,
+                    p: 1,
+                    color: 'common.black',
+                  }}
+                >
+                  <Close />
+                </Button>
+              </Stack>
+            </Toolbar>
             <Stack
               sx={{
                 height: '100%',
@@ -136,7 +133,7 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
                 variant={'contained'}
                 startIcon={<FileDownloadOutlined />}
                 onClick={downloadImage}
-                sx={{color: 'common.white'}}
+                sx={{ color: 'common.white' }}
               >
                 <Typography variant={'body2'} fontWeight={500}>
                   下载图片

@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import usePaperPagination, { PaperItemType } from '../atoms/paper.atom';
 import { Box, Stack } from '@mui/material';
 import {
@@ -31,16 +31,18 @@ const CommonMasonry = ({
     {
       width,
       columnGutter: 16,
-      maxColumnCount: 6,
+      maxColumnCount: 8,
       columnCount: columnCount,
     },
     [width, columnCount],
   );
   const resizeObserver = useResizeObserver(positioner);
 
+  console.log({ scrollTop: scrollTop === 0 ? 1 : scrollTop, offset });
+
   return useMasonry({
     positioner,
-    scrollTop,
+    scrollTop: scrollTop === 0 ? 1 : scrollTop,
     height,
     isScrolling,
     containerRef,
@@ -59,25 +61,27 @@ const NewPictureContent = () => {
   return (
     <Stack sx={{ position: 'relative', flexGrow: 1, minHeight: 0 }}>
       <Box sx={{ height: '100%', width: '100%', p: 2 }}>
-        <CommonMasonry
-          columnCount={columnCount}
-          overscanBy={2}
-          items={list}
-          render={({ index, data: item, width }) => {
-            const height = (item.dimension_y * width) / item.dimension_x;
-            return (
-              <ImgCard
-                key={item.id}
-                item={{ ...item, displayHeight: height }}
-                idx={index}
-                onShow={() => {
-                  setSelectItem(item);
-                  openDrawer();
-                }}
-              />
-            );
-          }}
-        />
+        {list.length > 0 ? (
+          <CommonMasonry
+            columnCount={columnCount}
+            overscanBy={2}
+            items={list}
+            render={({ index, data: item, width }) => {
+              const height = (item.dimension_y * width) / item.dimension_x;
+              return (
+                <ImgCard
+                  key={item.id}
+                  item={{ ...item, displayHeight: height }}
+                  idx={index}
+                  onShow={() => {
+                    setSelectItem(item);
+                    openDrawer();
+                  }}
+                />
+              );
+            }}
+          />
+        ) : null}
         <Loading />
       </Box>
       {open && selectItem && <ImgFullDrawer open={open} item={selectItem} onClose={hideDrawer} />}

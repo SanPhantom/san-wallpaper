@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, IconButton, useTheme, Divider } from '@mui
 import React from 'react';
 import { Search, SearchIconWrapper, StyledInputBase } from '../common/Search';
 import { Search as SearchIcon } from '@mui/icons-material';
+import SearchSetting from '../SearchSetting';
 
 interface IAppHeaderProps {
   searchValue?: string;
@@ -49,9 +50,7 @@ const AppHeader = ({ searchValue, onSearch, onChange, onSetting }: IAppHeaderPro
             }}
           />
         </Search>
-        <IconButton sx={{ ml: 1 }} onClick={onSetting}>
-          <Settings htmlColor={theme.palette.common.black} />
-        </IconButton>
+        <SearchSetting />
       </Toolbar>
       <Divider sx={{ width: '100%' }} />
     </AppBar>

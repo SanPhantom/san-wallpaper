@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useBoolean, useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
 import { Image as CanvasImage } from 'react-konva';
 import { Html } from 'react-konva-utils';
-import { LinearProgress } from '@mui/material'
+import { LinearProgress } from '@mui/material';
 
 const UrlImage = ({
   contentRef,
@@ -26,6 +26,7 @@ const UrlImage = ({
     isDragging: false,
   });
   const size = useSize(contentRef);
+  const renderCountRef = useRef(0);
 
   const [imgLoading, { setTrue: startLoading, setFalse: closeLoading }] = useBoolean(false);
 
@@ -44,6 +45,8 @@ const UrlImage = ({
   const loadImage = useCallback(() => {
     const image = new Image();
     image.src = url;
+    // image.crossOrigin = 'anonymous';
+
     image.onload = () => {
       closeLoading();
       const imageRate = image.width / image.height;
@@ -69,6 +72,14 @@ const UrlImage = ({
         img: image,
       });
     };
+    image.onerror = () => {
+      if (renderCountRef.current >= 5) {
+        console.log('render error');
+      } else {
+        renderCountRef.current++;
+        loadImage();
+      }
+    };
   }, [url, size]);
 
   useCreation(() => {
@@ -89,7 +100,7 @@ const UrlImage = ({
           justifyContent: 'center',
         }}
       >
-        <progress  role="progressbar"></progress>
+        <progress role="progressbar"></progress>
       </div>
     </Html>
   ) : (

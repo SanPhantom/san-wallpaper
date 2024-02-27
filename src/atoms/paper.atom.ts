@@ -1,5 +1,5 @@
 import { atom, useAtom } from 'jotai';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { search } from '../services/paper';
 import { CategoryEnum, PurityEnum } from '../types.d';
 
@@ -60,9 +60,9 @@ const paginationAtom = atom({
   page: 0,
 });
 
-const searchAtom = atom<SearchDataType>(defaultSearch);
+export const searchAtom = atom<SearchDataType>(defaultSearch);
 
-const lockAtom = atom(false);
+const lockAtom = atom(true);
 
 const usePaperPagination = (lock: boolean = false) => {
   const [list, setList] = useAtom(paperListAtom);
@@ -72,35 +72,44 @@ const usePaperPagination = (lock: boolean = false) => {
   const [searchData] = useAtom(searchAtom);
 
   const [isLock, setLock] = useAtom(lockAtom);
+  const lockRef = useRef(isLock);
 
-  const fetchList = useCallback(async () => {
-    setLock(true);
-    const currentList = await search({ ...searchData, ...pagination });
-    setMeta(currentList.meta);
-    setList([...list, ...currentList.data]);
-  }, [searchData, pagination, list]);
+  const updateLock = useCallback((value: boolean) => {
+    lockRef.current = value;
+    setLock(value);
+  }, []);
 
-  const loadMore = useCallback(() => {
-    if (!isLock) {
+  const fetchList = useCallback(
+    async (page: number) => {
+      updateLock(true);
+      const currentList = await search({ ...searchData, page });
+      setMeta(currentList.meta);
+      setList([...list, ...currentList.data]);
+    },
+    [searchData, pagination, list],
+  );
+
+  const loadMore = useCallback(async () => {
+    if (!lockRef.current) {
+      updateLock(true);
       if (pagination.page === 0 || (meta && pagination.page < meta.last_page)) {
-        setPagination({ page: pagination.page + 1 });
+        const nextPage = pagination.page + 1;
+        setPagination({ page: nextPage });
+        await fetchList(nextPage);
       }
     }
   }, [pagination, isLock, meta]);
 
-  useEffect(() => {
-    (async () => {
-      if (!lock) {
-        if (pagination.page !== 0) {
-          await fetchList();
-        }
-      }
-    })();
-  }, [pagination.page]);
+  const reload = useCallback(() => {
+    updateLock(false);
+    setList([]);
+    setMeta(null);
+    setPagination({ page: 0 });
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLock(false);
+      updateLock(false);
       clearTimeout(timer);
     }, 500);
   }, [list]);
@@ -112,8 +121,9 @@ const usePaperPagination = (lock: boolean = false) => {
       searchData,
       loadMore,
       isLock,
+      reload,
     }),
-    [list, meta, searchData, loadMore, isLock],
+    [list, meta, searchData, loadMore, isLock, reload],
   );
 };
 

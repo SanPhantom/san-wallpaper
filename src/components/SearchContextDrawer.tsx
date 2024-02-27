@@ -12,7 +12,7 @@ import {
   SearchDataType,
   SortEnum,
   sorts,
-} from '../types';
+} from '../types.d';
 
 interface ISearchContextProps extends DrawerProps {
   searchData: SearchDataType;
@@ -27,7 +27,7 @@ const SearchContext = ({
   ...drawerProps
 }: ISearchContextProps) => {
   return (
-    <Drawer anchor="top" {...drawerProps}>
+    <Drawer open anchor="top" {...drawerProps}>
       <Toolbar />
       <Stack
         spacing={2}

@@ -8,17 +8,17 @@ interface ILoadingProps {
 }
 
 const Loading = ({ tip }: ILoadingProps) => {
-  const { loadMore, list, isLock } = usePaperPagination(true);
+  const { loadMore, isLock } = usePaperPagination(true);
 
   const loadingRef = useRef<HTMLDivElement>(null);
 
   const [isViewport] = useInViewport(loadingRef);
 
-  useEffect(() => {
-    if (isViewport && !isLock) {
-      loadMore();
-    }
-  }, [isViewport, list]);
+  if (isViewport && !isLock) {
+    loadMore().then(() => {
+      console.log('加载完成');
+    });
+  }
 
   return (
     <Stack

@@ -38,7 +38,7 @@ const ImgCard = memo(({ item, onShow }: IImgCardProps) => {
           justifyContent: 'center',
         }}
       >
-        <img src={item.thumbs.original} className="waterfall-img" alt="加载失败" />
+        <img src={item.thumbs.original} className="waterfall-img" alt="加载失败" loading={'lazy'} />
       </Box>
 
       <Stack
