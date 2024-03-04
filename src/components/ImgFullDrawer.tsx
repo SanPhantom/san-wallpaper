@@ -107,25 +107,55 @@ const ImgFullDrawer = ({ item, ...dialogProp }: IImgFullDrawerProps) => {
                 py: 4,
               }}
             >
-              <Stack>
+              <Stack sx={{ gap: 3 }}>
+                <Stack sx={{ flexDirection: 'row', gap: 0 }}>
+                  {item?.colors.map((color) => (
+                    <Box
+                      key={color}
+                      title={color}
+                      sx={{
+                        backgroundColor: color,
+                        width: 24,
+                        height: 24,
+                        flex: 1,
+                      }}
+                    />
+                  ))}
+                </Stack>
                 <Stack sx={{ gap: 1 }}>
-                  <Typography variant={'h3'} fontSize={16}>
-                    颜色:
-                  </Typography>
                   <Stack sx={{ flexDirection: 'row', gap: 1 }}>
-                    {item?.colors.map((color) => (
-                      <Box
-                        key={color}
-                        title={color}
-                        sx={{
-                          backgroundColor: color,
-                          width: 48,
-                          height: 48,
-                          borderRadius: 1,
-                          boxShadow: theme.shadows[2],
-                        }}
-                      />
-                    ))}
+                    <Typography fontSize={14} fontWeight={700} color={'grey.500'}>
+                      尺寸:
+                    </Typography>
+                    <Typography fontSize={14}>{item.resolution}</Typography>
+                  </Stack>
+                  <Stack sx={{ flexDirection: 'row', gap: 1 }}>
+                    <Typography fontSize={14} fontWeight={700} color={'grey.500'}>
+                      大小:
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {(item.file_size / 1024 / 1024).toFixed(2)}MiB
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ flexDirection: 'row', gap: 1 }}>
+                    <Typography fontSize={14} fontWeight={700} color={'grey.500'}>
+                      类型:
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.file_type.split('/')[1].toUpperCase()}
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ flexDirection: 'row', gap: 1 }}>
+                    <Typography fontSize={14} fontWeight={700} color={'grey.500'}>
+                      浏览:
+                    </Typography>
+                    <Typography fontSize={14}>{item.views}</Typography>
+                  </Stack>
+                  <Stack sx={{ flexDirection: 'row', gap: 1 }}>
+                    <Typography fontSize={14} fontWeight={700} color={'grey.500'}>
+                      收藏:
+                    </Typography>
+                    <Typography fontSize={14}>{item.favorites}</Typography>
                   </Stack>
                 </Stack>
               </Stack>

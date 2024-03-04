@@ -12,17 +12,6 @@ const ImageCanvas = ({ url }: ImageCanvasProps) => {
   const contextRef = useRef<HTMLDivElement>(null);
   const size = useSize(contextRef);
 
-  const [state, setState] = useSetState({
-    scale: 1,
-  });
-  const handleWheel = useMemoizedFn((e: KonvaEventObject<any>) => {
-    const delta = e.evt.wheelDelta > 0 ? 0.1 : -0.1;
-    if ((state.scale < 2 && delta > 0) || (state.scale > 0.5 && delta < 0)) {
-      setState({
-        scale: state.scale + delta,
-      });
-    }
-  });
   return (
     <Box
       sx={{
@@ -36,15 +25,14 @@ const ImageCanvas = ({ url }: ImageCanvasProps) => {
       <Stage
         width={size?.width ?? 0}
         height={size?.height ?? 0}
-        onWheel={handleWheel}
-        draggable
+        draggable={false}
         onContextMenu={(e) => {
           e.evt.stopPropagation();
           e.evt.preventDefault();
         }}
       >
         <Layer>
-          <UrlImage url={url} contentRef={contextRef} onWheel={handleWheel} scale={state.scale} />
+          <UrlImage url={url} contentRef={contextRef} />
           <Transformer centeredScaling />
         </Layer>
       </Stage>

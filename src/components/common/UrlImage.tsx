@@ -2,17 +2,13 @@ import React, { useCallback, useRef } from 'react';
 import { useBoolean, useCreation, useMemoizedFn, useSetState, useSize } from 'ahooks';
 import { Image as CanvasImage } from 'react-konva';
 import { Html } from 'react-konva-utils';
-import { LinearProgress } from '@mui/material';
+import type { KonvaEventObject } from 'konva/lib/Node';
 
 const UrlImage = ({
   contentRef,
-  onWheel,
-  scale,
   url,
 }: {
   contentRef: React.RefObject<HTMLDivElement>;
-  onWheel: (e: any) => void;
-  scale: number;
   url: string;
 }) => {
   const [state, setState] = useSetState({
@@ -40,6 +36,15 @@ const UrlImage = ({
     setState({
       isDragging: false,
     });
+  });
+
+  const handleWheel = useMemoizedFn((e: KonvaEventObject<any>) => {
+    const delta = e.evt.wheelDelta > 0 ? 0.1 : -0.1;
+    if ((state.scale < 2 && delta > 0) || (state.scale > 0.5 && delta < 0)) {
+      setState({
+        scale: state.scale + delta,
+      });
+    }
   });
 
   const loadImage = useCallback(() => {
@@ -111,12 +116,12 @@ const UrlImage = ({
       y={state.y}
       width={state.width}
       height={state.height}
-      scaleX={scale}
-      scaleY={scale}
+      scaleX={state.scale}
+      scaleY={state.scale}
       rotation={state.rotation}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onWheel={onWheel}
+      onWheel={handleWheel}
     />
   );
 };

@@ -15,16 +15,16 @@ export const categories: (keyof typeof CategoryEnum)[] = ['general', 'anime', 'p
 export enum PurityEnum {
   'sfw' = '100',
   'sketchy' = '110',
-  'nsfw' = '111',
+  // 'nsfw' = '111',
 }
 
 export enum PurityTypeEnum {
   'sfw' = '常规',
   'sketchy' = '开放',
-  'nsfw' = '隐藏',
+  // 'nsfw' = '隐藏',
 }
 
-export const purities: (keyof typeof PurityEnum)[] = ['sfw', 'sketchy', 'nsfw'];
+export const purities: (keyof typeof PurityEnum)[] = ['sfw', 'sketchy'];
 
 export enum SortEnum {
   'toplist' = '排行',
